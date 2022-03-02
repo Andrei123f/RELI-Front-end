@@ -1,0 +1,3 @@
+<template>
+    da boss
+</template>
