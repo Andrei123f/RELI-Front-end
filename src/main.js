@@ -1,9 +1,8 @@
-import { createApp } from "vue";
-// styles
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "@/assets/styles/tailwind.css";
-// mouting point for the whole app
-import App from "@/App.vue";
-import router from "./router";
-
-createApp(App).use(router).mount("#app");
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import mitt from 'mitt';
+const emitter = mitt();
+const app = createApp(App).use(router);
+app.config.globalProperties.emitter = emitter;
+app.mount('#app');
