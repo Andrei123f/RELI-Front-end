@@ -2,9 +2,9 @@
   "name": "reli-front-end",
   "version": "0.0.0",
   "scripts": {
+    "start": "vite preview",
     "dev": "vite",
     "build": "vite build",
-    "start": "vite preview",
     "hdeploy": "git push heroku master"
   },
   "dependencies": {
