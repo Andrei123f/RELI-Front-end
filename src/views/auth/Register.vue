@@ -53,7 +53,8 @@
 						<div class="card-footer py-3 border-0">
 							<div class="text-center"> 
 								Already have an account?
-								 <router-link to="/login">Log in</router-link>
+								 <a href="#" @click="() => this.$router.push('/login').catch(err => {console.log(err)})"  class="text-dark">Log in</a>
+
 							</div>
 						</div>
 					</div>

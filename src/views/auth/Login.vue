@@ -53,7 +53,7 @@
 						<div class="card-footer py-3 border-0">
 							<div class="text-center"> 
 								Don't have an account?
-								 <router-link to="/register">Create One</router-link>
+								 <a href="#" @click="() => this.$router.push('/register').catch(err => {})"  class="text-dark">Create One</a>
 							</div>
 						</div>
 					</div>
