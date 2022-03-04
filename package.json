@@ -4,8 +4,7 @@
   "scripts": {
     "start": "vite preview",
     "dev": "vite",
-    "build": "vite build",
-    "hdeploy": "git push heroku master"
+    "build": "vite build"
   },
   "dependencies": {
     "axios": "^0.26.0",
