@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
+import { createWebHistory, createRouter} from "vue-router";
 import test from "../views/Test.vue";
 import DefaultV from '../views/Default.vue';
 import Andrei from '../views/Andrei.vue';
@@ -19,7 +19,12 @@ const routes = [
     {
         path:'/login',
         name: 'Login',
-        component: () => import('../views/Login.vue')
+        component: () => import('../views/auth/Login.vue')
+    },
+    {
+        path:'/register',
+        name: 'Register',
+        component: () => import('../views/auth/Register.vue')
     },
     
     {
@@ -33,6 +38,6 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
+});
 
 export default router;
