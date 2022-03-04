@@ -4,13 +4,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview --port 5050",
-    "start": "vite --port $PORT"
+    "preview": "vite preview",
+    "start": "vite --port 80"
   },
   "dependencies": {
     "axios": "^0.26.0",
     "mitt": "^3.0.0",
     "vue": "^3.2.31",
+    "vue-cli": "^2.9.6",
     "vue-router": "^4.0.13"
   },
   "devDependencies": {
