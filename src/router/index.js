@@ -6,10 +6,17 @@ import Andrei from '../views/Andrei.vue';
 const routes = [
     {
         path: '/',
-        name: 'Default Vue Page',
+        name: 'Default', //change this to the dashboard or even create an about us page
         component: DefaultV
     },
-
+    {
+        path: '/dashboard',
+        name: 'Dashboard',
+        component: () => import('../views/dashboard/Dashboard.vue'), 
+        meta: {
+            requiresAuth: true
+        }
+    },
     {
         path: '/test',
         name: 'Test',

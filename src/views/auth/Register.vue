@@ -8,11 +8,38 @@
                         alt="logo"
                         width="100">
 					</div>
-					
 					<div class="card shadow-lg">
 						<div class="card-body p-5">
 							<h1 class="fs-4 card-title fw-bold mb-4">Register</h1> 
-							<form class="needs-validation" autocomplete="off" @submit.prevent="doLogin">
+							<form class="needs-validation" autocomplete="off" @submit.prevent="doRegister">
+								<div class="row mb-2">
+									<div class="col" style="width:50%">
+										<label class="mb-2 text-muted" for="firstname">Firstname</label>
+										<input id="firstname" 
+										   	type="text" 
+										   	class="form-control"
+										   	v-model="firstname"
+										   	required autofocus>
+									</div>
+									<div class="col" style="width:50%">
+										<label class="mb-2 text-muted" for="surname">Surname</label>
+										<input id="surname" 
+										   	type="text" 
+										   	class="form-control"
+										   	v-model="surname"
+										   	required autofocus>
+									</div>
+									
+								</div>
+								<div class="mb-3">
+									<label class="mb-2 text-muted" for="username">Username</label>
+									<input id="username" 
+										   type="text" 
+										   class="form-control"
+										   v-model="username"
+										   autocomplete="off"
+										   required>
+								</div>
 								<div class="mb-3">
 									<label class="mb-2 text-muted" for="email">Email Address</label>
 									<input id="email" 
@@ -21,14 +48,6 @@
 										   v-model="email"
 										   required autofocus>
 								</div>
-                                <div class="mb-3">
-									<label class="mb-2 text-muted" for="email">Username</label>
-									<input id="username" 
-										   type="text" 
-										   class="form-control"
-										   required>
-								</div>
-
 								<div class="mb-3">
 									<div class="mb-2 w-100">
 										<label class="text-muted" for="password">Password</label>
@@ -48,13 +67,11 @@
 									
 								</div>
 							</form>
-
 						</div>
 						<div class="card-footer py-3 border-0">
 							<div class="text-center"> 
 								Already have an account?
-								 <a href="#" @click="() => this.$router.push('/login').catch(err => {console.log(err)})"  class="text-dark">Log in</a>
-
+								<router-link to="/login"> Log in</router-link>
 							</div>
 						</div>
 					</div>
@@ -69,18 +86,21 @@
 
 <script>
 import axios from 'axios';
+let API_URL = import.meta.env.VITE_API_URL;
 
 export default{
   data() {
     return {
       email: '',
 	  password: '',
-	  remember_me: false,
+	  username: '',
 	  loading: false,
+	  firstname: '',
+	  surname: '',
     }
   },
   methods: {
-	  	async doLogin() {
+	  	async doRegister() {
 			try{
 				this.email = this.email.replace(/ /g, "");
 				this.password = this.password.replace(/ /g, "");
@@ -90,21 +110,26 @@ export default{
 				}
 
 				let payload = {
+					firstname: this.firstname,
+					surname: this.surname,
 					email: this.email,
 					password: this.password,
-					remember_me: this.remember_me
+					username: this.username
 				}
+				console.log(payload);
 				this.loading = true;
-				
-				const response = {
-					result: 'SUCCESS',
-					userLoggedIn: true,
-					username: this.username,
-					to
+				const response = await axios.post(API_URL + 'user/register', payload);
+				if(response.data){
+					const responseBody = response.data;
+					if(responseBody.result === 'SUCCESS'){
+						this.emitter.emit('displayMessage', ['success', `API submission succeded: ${responseBody.message}`]);
+					}else{
+						this.emitter.emit('displayMessage', ['error', ` API submission failed: ${responseBody.message}`]);
+					}
 				}
-						
+
+				this.loading = false;					
 			} catch(err){
-				console.log('gets');
 				console.log(err);
 				this.loading = false;
 				this.emitter.emit('displayMessage', ['error', `API submission failed. We cannot process your request right now.`]);

@@ -43,7 +43,6 @@ export default{
     mounted() {
         this.emitter.on("displayMessage", data => {
             this.resetMessages();
-            console.log(data);
             if(Array.isArray(data)){
               if(data[0] == 'info'){
                 this.showInfo = true;

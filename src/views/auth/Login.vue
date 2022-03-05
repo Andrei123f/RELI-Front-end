@@ -14,11 +14,11 @@
 							<h1 class="fs-4 card-title fw-bold mb-4">Login</h1> 
 							<form class="needs-validation" autocomplete="off" @submit.prevent="doLogin">
 								<div class="mb-3">
-									<label class="mb-2 text-muted" for="email">Email Address</label>
-									<input id="email" 
-										   type="email" 
+									<label class="mb-2 text-muted" for="username">Username</label>
+									<input id="username" 
+										   type="text" 
 										   class="form-control"
-										   v-model="email"
+										   v-model="username"
 										   required autofocus>
 								</div>
 
@@ -53,7 +53,7 @@
 						<div class="card-footer py-3 border-0">
 							<div class="text-center"> 
 								Don't have an account?
-								 <a href="#" @click="() => this.$router.push('/register').catch(err => {})"  class="text-dark">Create One</a>
+								<router-link to="/register"> Create One</router-link>
 							</div>
 						</div>
 					</div>
@@ -68,11 +68,20 @@
 
 <script>
 import axios from 'axios';
+import { useCookies } from "vue3-cookies";
+import {useStore} from "vuex";
 
+let API_URL = import.meta.env.VITE_API_URL;
 export default{
-  data() {
+	setup() {
+		const { cookies } = useCookies();
+    	return { cookies };
+	},
+	mounted() {
+	},
+	data() {
     return {
-      email: '',
+      username: '',
 	  password: '',
 	  remember_me: false,
 	  loading: false,
@@ -81,29 +90,38 @@ export default{
   methods: {
 	  	async doLogin() {
 			try{
-				this.email = this.email.replace(/ /g, "");
+				this.username = this.username.replace(/ /g, "");
 				this.password = this.password.replace(/ /g, "");
-				if(this.email == '' || this.password == '') {
+				if(this.username == '' || this.password == '') {
 					this.emitter.emit('displayMessage', ['info', 'Please enter the required values.']);	  
 					return;
 				}
 
 				let payload = {
-					email: this.email,
-					password: this.password,
-					remember_me: this.remember_me
+					"username": this.username,
+					"password": this.password,
+					"remember_me": this.remember_me
 				}
 				this.loading = true;
 				
-				const response = {
-					result: 'SUCCESS',
-					userLoggedIn: true,
-					username: this.username,
-					to
+				const response = await axios.post(API_URL + 'user/login', payload);
+				this.loading = false;
+				if(response.data){
+					this.loading = false;						
+					const responseBody = response.data;
+					if(responseBody.result === 'SUCCESS'){
+						this.cookies.set("access_token", responseBody.access_token.token_value);
+						this.cookies.set("refresh_token", responseBody.refresh_token.token_value);
+						this.$store.commit("login");
+						this.$router.push({name: "Dashboard"});
+						this.emitter.emit('displayMessage', ['success', `API submission succeded: ${responseBody.message}`]);
+					}else{
+						this.emitter.emit('displayMessage', ['error', ` API submission failed: ${responseBody.message}`]);
+					}
 				}
-						
+				this.loading = false;
+				console.log(response.data);						
 			} catch(err){
-				console.log('gets');
 				console.log(err);
 				this.loading = false;
 				this.emitter.emit('displayMessage', ['error', `API submission failed. We cannot process your request right now.`]);
