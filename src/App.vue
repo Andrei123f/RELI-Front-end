@@ -18,19 +18,16 @@
     :message="msg">
     </DangerNotification>
     </transition>
+
   </header>
-  <main>
     <router-view/>
-  </main>
-  <footer>
-    <!-- TODO add footer -->
-  </footer>
 </template>
 
 <script>
 import SuccessNotification from "./components/notifications/SuccessNotification.vue";
 import InfoNotfication from "./components/notifications/InfoNotfication.vue";
 import DangerNotification from "./components/notifications/DangerNotification.vue";
+import DashboardVue from "./views/dashboard/Dashboard.vue";
 export default{
   data: () => {
     return{
@@ -76,7 +73,7 @@ export default{
         this.msg = '';
       },
     },
-    components: { SuccessNotification, InfoNotfication, DangerNotification }
+    components: { SuccessNotification, InfoNotfication, DangerNotification, DashboardVue }
 }
 </script>
 

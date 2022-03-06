@@ -2,33 +2,31 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import mitt from 'mitt';
-import VueCookies from 'vue3-cookies'
-import authStore from './store/auth';
+import store from './store/index';
 
 const emitter = mitt();
 const app = createApp(App);
-
-app.use(VueCookies, {
-    expireTimes: "30d",
-    path: "/",
-    domain: "",
-    secure: true,
-    sameSite: "None"
-});
-app.use(authStore);
-
+app.use(store);
 
 router.beforeEach((to, from, next) => {
-    console.log(authStore.getters.getLoginStatus);
+    let userLoggedIn = store.getters['authStore/getLoginStatus'];
     if (to.matched.some(record => record.meta.requiresAuth)) {
         //if the route requires auth, check if the user has logged in. If they have not, redirect to login, else, go with whatever they'd like to do
-        if (! authStore.getters.getLoginStatus) {
-            next({ name: 'Login' });
+        if (! userLoggedIn) {
+            next({ name: 'Login' }).catch(err => {});
         } else {
-            next();
+            next().catch(err => {});
         }
     } else {
-         next();
+            if(to.matched.some(record => record.path == '/')){
+                if(userLoggedIn){
+                    next({name: 'Dashboard'}).catch(err => {});
+                }else{
+                    next({ name: 'Login' }).catch(err => {}); //for the time being we redirect to login
+                }
+            } else{
+                next().catch(err => {});
+            }
         }
     });
 

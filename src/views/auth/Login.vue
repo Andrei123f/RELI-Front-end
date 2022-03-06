@@ -67,11 +67,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import {mapActions} from 'vuex';
 import { useCookies } from "vue3-cookies";
-import {useStore} from "vuex";
-
-let API_URL = import.meta.env.VITE_API_URL;
 export default{
 	setup() {
 		const { cookies } = useCookies();
@@ -88,6 +85,9 @@ export default{
     }
   },
   methods: {
+	  ...mapActions({
+		  signIn: 'authStore/signIn'
+	  	}),
 	  	async doLogin() {
 			try{
 				this.username = this.username.replace(/ /g, "");
@@ -103,24 +103,21 @@ export default{
 					"remember_me": this.remember_me
 				}
 				this.loading = true;
+
+				const response = await this.signIn(payload);
 				
-				const response = await axios.post(API_URL + 'user/login', payload);
 				this.loading = false;
 				if(response.data){
 					this.loading = false;						
 					const responseBody = response.data;
 					if(responseBody.result === 'SUCCESS'){
-						this.cookies.set("access_token", responseBody.access_token.token_value);
-						this.cookies.set("refresh_token", responseBody.refresh_token.token_value);
-						this.$store.commit("login");
-						this.$router.push({name: "Dashboard"});
+						this.$router.push({name: "Dashboard"}).catch(err => {});
 						this.emitter.emit('displayMessage', ['success', `API submission succeded: ${responseBody.message}`]);
 					}else{
 						this.emitter.emit('displayMessage', ['error', ` API submission failed: ${responseBody.message}`]);
 					}
 				}
 				this.loading = false;
-				console.log(response.data);						
 			} catch(err){
 				console.log(err);
 				this.loading = false;
