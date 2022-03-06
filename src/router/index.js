@@ -1,28 +1,27 @@
 import { createWebHistory, createRouter} from "vue-router";
-import test from "../views/Test.vue";
-import DefaultV from '../views/Default.vue';
-import Andrei from '../views/Andrei.vue';
 
 const routes = [
     {
         path: '/',
         name: 'Default', //change this to the dashboard or even create an about us page
-        component: DefaultV
+        component: () => import('../views/Default.vue')
     },
     {
         path: '/dashboard',
         name: 'Dashboard',
-        component: () => import('../views/dashboard/Dashboard.vue'), 
+        component: () => import('../views/layouts/Dashboard.vue'),
         meta: {
             requiresAuth: true
-        }
-    },
-    {
-        path: '/test',
-        name: 'Test',
-        component: test
-    },
+        },
+        children: [
+            {
+                path: '',
+                name: 'Dashboard/default_page',
+                component: () => import('../views/dashboard/DefaultPage.vue'), 
+            }
+        ]
 
+    },
     {
         path:'/login',
         name: 'Login',
@@ -32,13 +31,7 @@ const routes = [
         path:'/register',
         name: 'Register',
         component: () => import('../views/auth/Register.vue')
-    },
-    
-    {
-        path: '/andrei',
-        name: 'Andrei',
-        component: Andrei
-    }  
+    }, 
 ];
 
 
