@@ -16,7 +16,7 @@ const routes = [
         children: [
             {
                 path: '',
-                name: 'Dashboard/default_page',
+                name: 'Dashboard/stats',
                 component: () => import('../views/dashboard/DefaultPage.vue'), 
             }
         ]

@@ -1,12 +1,18 @@
 <template>
 <div id="wrapper">
-    <DashboardNavVue></DashboardNavVue>
-    <router-view></router-view>
+    <DashboardSideNav></DashboardSideNav>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <DashboardTopNavVue></DashboardTopNavVue>
+            <router-view></router-view>
+        </div>
+    </div>
 </div>
 </template>
 
 <script>
-import DashboardNavVue from "../../components/dashboard/DashboardNav.vue";
+import DashboardSideNav from "../../components/dashboard/DashboardSideNav.vue";
+import DashboardTopNavVue from "../../components/dashboard/DashboardTopNav.vue";
 export default{
     data: () => {
         return{
@@ -15,7 +21,7 @@ export default{
     mounted(){
         console.log("logged in user? " + this.$store.getters['authStore/getLoginStatus']);
     },
-    components: { DashboardNavVue }
+    components: { DashboardSideNav, DashboardTopNavVue }
 }
 </script>
 <style>
