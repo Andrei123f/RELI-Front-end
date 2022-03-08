@@ -3,11 +3,11 @@
     <div class="status-bar" :style="'width: ' + widthOfStatusBar + '%;'">
       <div
         class="current-status"
+        id="current_status"
         :style="
           'width:' +
           widthOfCurrentStatus +
-          '%;' +
-          'transition: 5500ms linear '
+          '%; transition: width ' + completedNodesN * 500 +'ms linear 0s'
         "
       ></div>
     </div>
@@ -15,10 +15,9 @@
       <li
         v-for="(o, index) in checkpoints"
         v-bind:key="index"
-        v-bind:class="o.completed == true ? 
-        ((o.completed && index != checkpoints.length-1 && !checkpoints[index+1].completed) ? 'bubble visited current'
-        : 'bubble visited') : 'bubble'"
-        v-bind:style="'width:' + widthOfStage + '%; transition: '+ 5500 * index + 'ms linear'"
+        class="bubble "
+        v-bind:id="'bubble_' + index"
+        v-bind:style="'width:' + widthOfStage + '%; transition: '+ 500 * index + 'ms linear 0s'"
       >{{ o.title }}
       </li>
     </ul>
@@ -38,17 +37,36 @@ export default {
       widthOfStage: 0,
       widthOfStatusBar: 0,
       widthOfCurrentStatus: 0,
+      animationDelay: 200,
+      animationalDelayForBubble: 1032,
+      completedNodesN: 0,
     };
   },
   async mounted() {
     this.widthOfStage = 100 / this.checkpoints.length;
     this.widthOfStatusBar = 100 - this.widthOfStage;
-
+    this.completedNodesN = this.checkpoints.filter((el) => el.completed).length;
+    
     for (let i = 1; i < this.checkpoints.length - 1; i++) {
         if(!this.checkpoints[i].completed) return;
         setTimeout(function () {
         this.widthOfCurrentStatus = (100 * i) / (this.checkpoints.length - 1);
-      }.bind(this), 200);
+      }.bind(this), this.animationDelay);
+    }
+
+
+    let animationDelay = this.animationDelay;
+    for (let i = 0; i < this.checkpoints.length; i++){
+      if(!this.checkpoints[i].completed) return;
+        setTimeout(function () {
+          let classB = i+1 == this.checkpoints.length - 1 ? 'visited current' : 'visited';
+          document.getElementById(`bubble_${i}`).className += ' ' + classB;
+      }.bind(this), animationDelay);
+      if( i == 0) {
+        animationDelay = this.animationalDelayForBubble * i * 3;
+      }else{
+      animationDelay = this.animationalDelayForBubble * i;
+      }
     }
   }
 };
