@@ -7,7 +7,9 @@
         :style="
           'width:' +
           widthOfCurrentStatus +
-          '%; transition: width ' + completedNodesN * 500 +'ms linear 0s'
+          '%; transition: width ' +
+          completedNodesN * 500 +
+          'ms linear 0s'
         "
       ></div>
     </div>
@@ -15,10 +17,17 @@
       <li
         v-for="(o, index) in checkpoints"
         v-bind:key="index"
-        class="bubble "
+        class="bubble"
         v-bind:id="'bubble_' + index"
-        v-bind:style="'width:' + widthOfStage + '%; transition: '+ 500 * index + 'ms linear 0s'"
-      >{{ o.title }}
+        v-bind:style="
+          'width:' +
+          widthOfStage +
+          '%; transition: ' +
+          500 * index +
+          'ms linear 0s'
+        "
+      >
+        {{ o.title }}
       </li>
     </ul>
   </div>
@@ -38,47 +47,65 @@ export default {
       widthOfStatusBar: 0,
       widthOfCurrentStatus: 0,
       animationDelay: 200,
-      animationalDelayForBubble: 1032,
+      animationalDelayForBubble: 700,
       completedNodesN: 0,
     };
   },
   mounted() {
+    this.updateProgressBar();
+  },
+  methods: {
+    updateProgressBar() {
+      this.widthOfStage = 100 / this.checkpoints.length;
+      this.widthOfStatusBar = 100 - this.widthOfStage;
+      this.completedNodesN = this.checkpoints.filter(
+        (el) => el.completed
+      ).length;
 
-    this.widthOfStage = 100 / this.checkpoints.length;
-    this.widthOfStatusBar = 100 - this.widthOfStage;
-    this.completedNodesN = this.checkpoints.filter((el) => el.completed).length;
-    
-    for (let i = 1; i < this.checkpoints.length - 1; i++) {
-        if(!this.checkpoints[i].completed) continue;
-        setTimeout(function () {
-        this.widthOfCurrentStatus = (100 * i) / (this.checkpoints.length - 1);
-      }.bind(this), this.animationDelay);
-    }
-
-
-    let animationDelay = this.animationDelay;
-    for (let i = 0; i < this.checkpoints.length; i++){
-      if(!this.checkpoints[i].completed) continue;
-        setTimeout(function () {
-          let classB = i+1 == this.checkpoints.length - 1 ? 'visited current' : 'visited';
-          document.getElementById(`bubble_${i}`).className += ' ' + classB;
-      }.bind(this), animationDelay);
-      if( i == 0) {
-        animationDelay = this.animationalDelayForBubble * i * 3;
-      }else{
-      animationDelay = this.animationalDelayForBubble * i;
+      for (let i = 1; i < this.checkpoints.length - 1; i++) {
+        if (!this.checkpoints[i].completed) continue;
+        setTimeout(
+          function () {
+            this.widthOfCurrentStatus =
+              (100 * i) / (this.checkpoints.length - 1);
+          }.bind(this),
+          this.animationDelay
+        );
       }
-    }
-  }
+
+      let animationDelay = this.animationDelay;
+      for (let i = 0; i < this.checkpoints.length; i++) {
+        if (!this.checkpoints[i].completed) continue;
+        setTimeout(
+          function () {
+            let classB =
+              i + 1 == this.completedNodesN ? "visited current" : "visited";
+            let bubble = document.getElementById(`bubble_${i}`);
+            if (bubble) {
+              bubble.className += " " + classB;
+            }
+          }.bind(this),
+          animationDelay
+        );
+        if (i == 0) {
+          animationDelay = this.animationalDelayForBubble;
+        } else {
+          animationDelay = this.animationalDelayForBubble * i;
+        }
+      }
+    },
+  },
 };
 </script>
+
+
 <style scoped>
 .progress_bar {
   width: 100%;
-margin: 0;
-padding: 0;
-font-size: 0;
-list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  list-style: none;
 }
 
 .bubble {
