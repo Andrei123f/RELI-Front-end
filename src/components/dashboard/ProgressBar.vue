@@ -42,13 +42,14 @@ export default {
       completedNodesN: 0,
     };
   },
-  async mounted() {
+  mounted() {
+
     this.widthOfStage = 100 / this.checkpoints.length;
     this.widthOfStatusBar = 100 - this.widthOfStage;
     this.completedNodesN = this.checkpoints.filter((el) => el.completed).length;
     
     for (let i = 1; i < this.checkpoints.length - 1; i++) {
-        if(!this.checkpoints[i].completed) return;
+        if(!this.checkpoints[i].completed) continue;
         setTimeout(function () {
         this.widthOfCurrentStatus = (100 * i) / (this.checkpoints.length - 1);
       }.bind(this), this.animationDelay);
@@ -57,7 +58,7 @@ export default {
 
     let animationDelay = this.animationDelay;
     for (let i = 0; i < this.checkpoints.length; i++){
-      if(!this.checkpoints[i].completed) return;
+      if(!this.checkpoints[i].completed) continue;
         setTimeout(function () {
           let classB = i+1 == this.checkpoints.length - 1 ? 'visited current' : 'visited';
           document.getElementById(`bubble_${i}`).className += ' ' + classB;
