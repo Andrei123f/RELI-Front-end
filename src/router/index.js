@@ -13,6 +13,9 @@ const routes = [
         meta: {
             requiresAuth: true
         },
+        redirect: {
+            name: 'Dashboard/stats'
+        },
         children: [
             {
                 path: '',
