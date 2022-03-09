@@ -26,6 +26,19 @@ const routes = [
 
     },
     {
+        path: '/challenge',
+        name: 'Challenge',
+        component: () => import('../views/layouts/Dashboard.vue'),
+        meta: {
+            requiresAuth: true
+        },
+        children: [{
+            path: 'solve',
+            name: 'Challenge/solve',
+            component: () => import('../views/dashboard/SolveChallenge.vue'), 
+        }]
+    },
+    {
         path:'/login',
         name: 'Login',
         component: () => import('../views/auth/Login.vue')

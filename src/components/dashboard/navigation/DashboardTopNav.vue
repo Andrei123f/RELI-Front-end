@@ -106,7 +106,7 @@
           >
           <img
             class="img-profile rounded-circle"
-            src="../../../public/cosmin_try.png"
+            src="../../../../public/cosmin_try.png"
           />
         </a>
         <!-- Dropdown - User Information -->

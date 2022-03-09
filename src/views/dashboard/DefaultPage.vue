@@ -71,10 +71,10 @@
 </template>
 
 <script>
-import ProgressBarVue from "../../components/dashboard/ProgressBar.vue";
-import DoughnutChartVue from "../../components/dashboard/DoughnutChart.vue";
-import ProgressBar from "../../components/dashboard/ProgressBar.vue";
-import LineChartVue from "../../components/dashboard/LineChart.vue";
+import ProgressBarVue from "../../components/dashboard/stats/ProgressBar.vue";
+import DoughnutChartVue from "../../components/dashboard/stats/DoughnutChart.vue";
+import ProgressBar from "../../components/dashboard/stats/ProgressBar.vue";
+import LineChartVue from "../../components/dashboard/stats/LineChart.vue";
 
 export default {
   data: () => {

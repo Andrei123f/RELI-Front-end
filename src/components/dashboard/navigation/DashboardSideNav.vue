@@ -9,7 +9,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center">
       <router-link to="/dashboard">
         <div class="sidebar-brand-icon">
-          <img src="../../../public/cosmin_try.png" width="65" height="65" />
+          <img src="../../../../public/cosmin_try.png" width="65" height="65" />
         </div>
       </router-link>
       <router-link
@@ -45,9 +45,11 @@
       class="nav-item"
       v-bind:class="{ active: this.$route.name == 'Dashboard/challenge/track' }"
     >
-      <a class="nav-link" href="index.html">
-        <i class="fas fa-route"></i>
-        <span>Progress Tracker</span></a
+      <a class="nav-link">
+        <i class="fas fa-award"></i>
+        <span>Achievements</span>
+        
+        </a
       >
     </li>
 
@@ -59,10 +61,10 @@
       class="nav-item"
       v-bind:class="{ active: this.$route.name == 'Dashboard/challenge/solve' }"
     >
-      <a class="nav-link" href="index.html">
-        <i class="fas fa-book-reader"></i>
-        <span>Solve a new challenge</span></a
-      >
+    <router-link class="nav-link" to="/challenge/solve"> 
+      <i class="fas fa-book-reader"></i>
+        <span>Solve a new challenge</span>
+    </router-link>
     </li>
 
     <!-- Divider -->

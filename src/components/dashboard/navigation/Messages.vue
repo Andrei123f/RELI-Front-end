@@ -3,7 +3,7 @@
     <div class="dropdown-list-image mr-3">
       <img
         class="rounded-circle"
-        src="../../../public/cosmin_try.png"
+        src="../../../../public/cosmin_try.png"
         alt="..."
       />
       <div class="status-indicator bg-success"></div>

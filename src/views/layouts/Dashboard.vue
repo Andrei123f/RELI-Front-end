@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import DashboardSideNav from "../../components/dashboard/DashboardSideNav.vue";
-import DashboardTopNavVue from "../../components/dashboard/DashboardTopNav.vue";
+import DashboardSideNav from "../../components/dashboard/navigation/DashboardSideNav.vue";
+import DashboardTopNavVue from "../../components/dashboard/navigation/DashboardTopNav.vue";
 export default{
     data: () => {
         return{
