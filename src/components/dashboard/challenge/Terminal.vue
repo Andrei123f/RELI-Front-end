@@ -18,16 +18,37 @@ import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css";
 
+//for syntax checking
+//TODO decide on the tool that you are going to use for syntax validating
+import * as esprima from "esprima"; //Note:code is not vaildate run time error because it uses ast parser to analyze the correct syntax.
+import Interpreter from "js-interpreter"; //this does not support 'let' declarations.
+
 export default {
   components: {
     PrismEditor,
   },
-  data: () => ({ 
-    code: '' 
+  data: () => ({
+    code: "",
   }),
   methods: {
     highlighter(code) {
       return highlight(code, languages.js);
+    },
+    evalSyntax() {
+      console.log("Evaluating the code...");
+      console.log(this.code);
+      try {
+        esprima.parseScript(this.code);
+        console.log("Checks passed!");
+      } catch (e) {
+        console.log("Oops... something wrong with your code...");
+        console.log(e.message);
+      }
+    },
+  },
+  watch: {
+    code() {
+      this.evalSyntax();
     },
   },
 };
