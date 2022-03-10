@@ -1,6 +1,11 @@
 <template>
   <prism-editor
     class="my-editor"
+    v-bind:class="{
+      'border-left-danger': stat == 'err',
+      'border-left-success': stat == 'correct',
+      'border-left-warning': stat == 'loading',
+    }"
     v-model="code"
     :highlight="highlighter"
     line-numbers
@@ -29,26 +34,38 @@ export default {
   },
   data: () => ({
     code: "",
+    t: null,
+    err: null,
+    stat: null,
   }),
   methods: {
     highlighter(code) {
       return highlight(code, languages.js);
     },
     evalSyntax() {
-      console.log("Evaluating the code...");
-      console.log(this.code);
       try {
         esprima.parseScript(this.code);
-        console.log("Checks passed!");
+        this.stat = "correct";
       } catch (e) {
-        console.log("Oops... something wrong with your code...");
-        console.log(e.message);
+        let ep = e.message.split(":");
+        this.error(ep[0], ep[1]);
       }
+    },
+    error(line, msg) {
+      this.stat = "err";
+      console.log(line);
+      console.log(msg);
     },
   },
   watch: {
     code() {
-      this.evalSyntax();
+      this.stat = "loading";
+      if (this.t) {
+        clearTimeout(this.t);
+        this.t = setTimeout(this.evalSyntax, 500);
+      } else {
+        this.t = setTimeout(this.evalSyntax, 500);
+      }
     },
   },
 };
