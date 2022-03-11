@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import authStore from './authStore';
+import dashboardStore from './dashboardStore';
 import createPersistedState from 'vuex-persistedstate';
 import SecureLS from 'secure-ls';
 
@@ -9,7 +10,7 @@ const ls = new SecureLS({
 // Create a new store instance.
 const store = createStore({
     modules: {
-        authStore
+        authStore, dashboardStore
     },
     plugins: [
       createPersistedState({

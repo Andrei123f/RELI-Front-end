@@ -7,10 +7,13 @@
     <!-- Content Row -->
     <div class="row">
       <div class="col-xs-12 col-lg-12">
-        <div class="card shadow mb-4">
-          <h6 class="m-0 font-weight-bold text-primary">Your jorney so far</h6>
+        <div class="card-header card shadow mb-4" align-items-center>
+          <h6 class="m-0 font-weight-bold text-primary">
+            Your jorney so far
+            <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
+          </h6>
         </div>
-        <div class="card-body">
+        <div class="card-body" v-if="!isLoadingData">
           <ProgressBarVue :checkpoints="challengesData"></ProgressBarVue>
         </div>
       </div>
@@ -33,10 +36,11 @@
           >
             <h6 class="m-0 font-weight-bold text-primary">
               Some other chart that looks cool
+              <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>
           <!-- Card Body -->
-          <div class="card-body">
+          <div class="card-body" v-if="!isLoadingData">
             <LineChartVue></LineChartVue>
           </div>
         </div>
@@ -58,10 +62,11 @@
           >
             <h6 class="m-0 font-weight-bold text-primary">
               This chart displays something interesting I guess
+              <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>
           <!-- Card Body -->
-          <div class="card-body">
+          <div class="card-body" v-if="!isLoadingData">
             <DoughnutChartVue></DoughnutChartVue>
           </div>
         </div>
@@ -75,11 +80,12 @@ import ProgressBarVue from "../../components/dashboard/stats/ProgressBar.vue";
 import DoughnutChartVue from "../../components/dashboard/stats/DoughnutChart.vue";
 import ProgressBar from "../../components/dashboard/stats/ProgressBar.vue";
 import LineChartVue from "../../components/dashboard/stats/LineChart.vue";
+import { mapActions } from "vuex";
 
 export default {
   data: () => {
     return {
-      challengesData: [
+       challengesData: [
         {
           title: "Challenge 1",
           completed: true,
@@ -121,9 +127,12 @@ export default {
           completed: false,
         },
       ],
+      isLoadingData: false,
     };
   },
-  mounted() {},
+  mounted() {
+    this.loadDashboardData();
+  },
   setup() {},
 
   components: {
@@ -133,7 +142,16 @@ export default {
     LineChartVue,
   },
 
-  methods: {},
+  methods: {
+    ...mapActions({
+      getDashboardData: "dashboardStore/getDashboardData",
+    }),
+    async loadDashboardData() {
+      this.isLoadingData = true;
+      const dashBoardData = await this.getDashboardData();
+      this.isLoadingData = false;
+    },
+  },
 };
 </script>
 <style scoped>

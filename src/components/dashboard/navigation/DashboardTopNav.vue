@@ -152,7 +152,7 @@ export default {
     }
   },
   mounted() {
-    this.userData = {firstname: 'Andrei', surname: 'Popa'}; //TODO get from the API the firstname, lastname etc
+    this.userData = this.$store.getters['authStore/getUserDetails'];
   },
   components: { NotificationsVue, MessagesVue, Notifications },
 };
