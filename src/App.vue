@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import SuccessNotification from "./components/notifications/SuccessNotification.vue";
 import InfoNotfication from "./components/notifications/InfoNotfication.vue";
 import DangerNotification from "./components/notifications/DangerNotification.vue";
@@ -56,12 +57,40 @@ export default {
       this.resetMessages();
     });
   },
+  computed: {
+    ...mapGetters({
+      getRefreshAccessTokenStatus: "authStore/getRefreshAccessTokenStatus",
+    }),
+  },
   methods: {
     resetMessages() {
       this.showInfo = false;
       this.showSuccess = false;
       this.showDanger = false;
       this.msg = "";
+    },
+    updateRefreshAccessTokenMessage(state) {
+      switch (state) {
+        case "pending":
+          this.showInfo = true;
+          this.msg =
+            "Access token is being refreshed. Please do not make any submission.";
+          break;
+        case "success":
+          this.showInfo = true;
+          this.msg = "Access token successfully refreshed.";
+          break;
+        case "error":
+          this.showInfo = true;
+          this.msg = "Unable to refresh access token. Please log back in.";
+          this.$router.push({path: '/login'});
+          break;
+      }
+    },
+  },
+  watch: {
+    getRefreshAccessTokenStatus(newVal, oldVal) {
+      this.updateRefreshAccessTokenMessage(newVal);
     },
   },
   components: { SuccessNotification, InfoNotfication, DangerNotification },

@@ -10,6 +10,7 @@ const authStore = {
     refresh_token: null,
     access_token: null,
     userDetails: null,
+    refreshAccessTokenStatus: null,
   },
   mutations: {
     SET_TOKENS: (state, { access_token, refresh_token }) => {
@@ -22,6 +23,9 @@ const authStore = {
     SET_USER_DETAILS: (state, userDetails) => {
       state.userDetails = userDetails;
     },
+    SET_REFRESH_ACCESS_TOKEN_STATUS: (state, s) => {
+      state.refreshAccessTokenStatus = s;
+    }
   },
   actions: {
     async signIn({ dispatch }, payload) {
@@ -42,6 +46,9 @@ const authStore = {
         const payload = {
           refresh_token: refresh_token,
         };
+
+        commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'pending');
+        await new Promise(resolve => setTimeout(resolve, 1000));
         const response = await axios
           .post(API_URL + "auth/refreshAccessToken", payload, {
             headers: {
@@ -50,29 +57,30 @@ const authStore = {
           })
           .catch((err) => {
             if (err.response.status == 403) {
+              commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'error');
               //logout user and display info message
-              /*
+              
               dispatch("attempt", {
                 access_token: null,
                 refresh_token: null,
                 userDetails: null,
               });
-              */
+              
             }
           });
         console.log(response);
         if (response.status == 200 && response.data.result == "SUCCESS") {
+          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'success');
           const access_token = response.data.access_token;
           dispatch("attempt", { access_token, refresh_token, userDetails });
         } else {
+          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'error');
           //logout user and display info message
-          /*
             dispatch("attempt", {
             access_token: null,
             refresh_token: null,
             userDetails: null,
           });
-          */
         }
       }
     },
@@ -87,6 +95,7 @@ const authStore = {
     getRefreshToken: (state) => state.refresh_token,
     getAccessToken: (state) => state.access_token,
     getUserDetails: (state) => state.userDetails,
+    getRefreshAccessTokenStatus: (state) => state.refreshAccessTokenStatus
   },
 };
 export default authStore;
