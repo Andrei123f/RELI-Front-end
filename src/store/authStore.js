@@ -25,7 +25,7 @@ const authStore = {
     },
     SET_REFRESH_ACCESS_TOKEN_STATUS: (state, s) => {
       state.refreshAccessTokenStatus = s;
-    }
+    },
   },
   actions: {
     async signIn({ dispatch }, payload) {
@@ -47,8 +47,8 @@ const authStore = {
           refresh_token: refresh_token,
         };
 
-        commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'pending');
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        commit("SET_REFRESH_ACCESS_TOKEN_STATUS", "pending");
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const response = await axios
           .post(API_URL + "auth/refreshAccessToken", payload, {
             headers: {
@@ -57,31 +57,54 @@ const authStore = {
           })
           .catch((err) => {
             if (err.response.status == 403) {
-              commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'error');
-              //logout user and display info message
-              
+              commit("SET_REFRESH_ACCESS_TOKEN_STATUS", "error");
               dispatch("attempt", {
                 access_token: null,
                 refresh_token: null,
                 userDetails: null,
               });
-              
             }
           });
-        console.log(response);
         if (response.status == 200 && response.data.result == "SUCCESS") {
-          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'success');
+          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", "success");
           const access_token = response.data.access_token;
           dispatch("attempt", { access_token, refresh_token, userDetails });
         } else {
-          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", 'error');
-          //logout user and display info message
-            dispatch("attempt", {
+          commit("SET_REFRESH_ACCESS_TOKEN_STATUS", "error");
+          dispatch("attempt", {
             access_token: null,
             refresh_token: null,
             userDetails: null,
           });
         }
+      }
+    },
+    async getValidAccessToken({ dispatch, state }) {
+      //TODO : maybe store the cookie in the cookie so that subsequent request do not busy the API.
+      const curr_access_token = state.access_token;
+      let rtrn = null;
+      const response = await axios
+        .post(
+          API_URL + "auth/validateAccessToken",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${curr_access_token}`,
+            },
+          }
+        )
+        .catch(async (err) => {
+          await dispatch("refreshAccessToken");
+          rtrn = state.access_token;
+        });
+      if (rtrn) return rtrn;
+
+      if (response.status == 200 && response.data.result == "SUCCESS") {
+        return state.access_token;
+      } else {
+        //if token is not valid refresh it
+        await dispatch("refreshAccessToken");
+        return state.access_token;
       }
     },
     async attempt({ commit }, { access_token, refresh_token, userDetails }) {
@@ -95,7 +118,7 @@ const authStore = {
     getRefreshToken: (state) => state.refresh_token,
     getAccessToken: (state) => state.access_token,
     getUserDetails: (state) => state.userDetails,
-    getRefreshAccessTokenStatus: (state) => state.refreshAccessTokenStatus
+    getRefreshAccessTokenStatus: (state) => state.refreshAccessTokenStatus,
   },
 };
 export default authStore;

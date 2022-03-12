@@ -83,7 +83,7 @@ export default {
         case "error":
           this.showInfo = true;
           this.msg = "Unable to refresh access token. Please log back in.";
-          this.$router.push({path: '/login'});
+          this.$router.push({ path: "/login" });
           break;
       }
     },
