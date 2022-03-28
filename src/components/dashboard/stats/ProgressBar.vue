@@ -1,5 +1,4 @@
 <template>
-  <div class="progress-bar-wrapper">
     <div class="status-bar" :style="'width: ' + widthOfStatusBar + '%;'">
       <div
         class="current-status"
@@ -27,10 +26,9 @@
           'ms linear 0s'
         "
       >
-        {{ o.title }}
+        <span style="width: 10px; height:20px;">{{ o.title }} <br> {{ o.description }} </span>
       </li>
     </ul>
-  </div>
 </template>
 <script>
 export default {

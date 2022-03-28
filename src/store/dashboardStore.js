@@ -6,11 +6,19 @@ const dashboardStore = {
   namespaced: true,
   install: (app, options) => {},
   state: {
-    challengeStats: [],
+    chapterStats: [],
+    updateChapterStats: true,
   },
-  mutations: {},
+  mutations: {
+    SET_UPDATE_CHAPTER_STATS_FLAG(state, flag) {
+      state.updateChapterStats = flag;
+    },
+    SET_CHAPTER_STATS(state, stats) {
+      state.chapterStats = stats;
+    },
+  },
   actions: {
-    async getDashboardData({ dispatch }) {
+    async fetchDashboardData({ dispatch, commit }) {
       const accessToken = await dispatch(
         "authStore/getValidAccessToken",
         {},
@@ -26,7 +34,22 @@ const dashboardStore = {
           console.log("Something went wrong with the getDashboardData method");
           console.log(err);
         });
-      return response;
+
+      if (response.status == 200 && response.data.result == "SUCCESS") {
+        commit("SET_CHAPTER_STATS", response.data.chaptersData.chapters);
+      } else {
+        console.log("Something went wrong and could not fetch chapters stats.");
+      }
+    },
+
+    async getDashboardData({ dispatch, commit, state }) {
+      if (true) {
+        //todo decide how to handle caching the results so no unnecessary requests are made...
+        await dispatch("fetchDashboardData");
+        commit("SET_UPDATE_CHAPTER_STATS_FLAG", false);
+      }
+
+      return state.chapterStats;
     },
   },
   getters: {},

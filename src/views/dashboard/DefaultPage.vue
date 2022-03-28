@@ -14,10 +14,11 @@
           </h6>
         </div>
         <div class="card-body" v-if="!isLoadingData">
-          <ProgressBarVue :checkpoints="challengesData"></ProgressBarVue>
+          <ProgressBarVue :checkpoints="formattedChaptersData"></ProgressBarVue>
         </div>
       </div>
     </div>
+    <div class="row"></div>
     <!-- Content Row -->
     <div class="row">
       <!-- Area Chart -->
@@ -41,7 +42,7 @@
           </div>
           <!-- Card Body -->
           <div class="card-body" v-if="!isLoadingData">
-            <LineChartVue></LineChartVue>
+            <LineChartVue :graphData="formattedLineChart"></LineChartVue>
           </div>
         </div>
       </div>
@@ -67,7 +68,9 @@
           </div>
           <!-- Card Body -->
           <div class="card-body" v-if="!isLoadingData">
-            <DoughnutChartVue></DoughnutChartVue>
+            <DoughnutChartVue
+              :graphData="formattedDoughnutChart"
+            ></DoughnutChartVue>
           </div>
         </div>
       </div>
@@ -85,48 +88,19 @@ import { mapActions } from "vuex";
 export default {
   data: () => {
     return {
-       challengesData: [
-        {
-          title: "Challenge 1",
-          completed: true,
-        },
-        {
-          title: "Challenge 2",
-          completed: true,
-        },
-        {
-          title: "Challenge 3",
-          completed: true,
-        },
-        {
-          title: "Challenge 4",
-          completed: true,
-        },
-        {
-          title: "Challenge 5",
-          completed: true,
-        },
-        {
-          title: "Challenge 6",
-          completed: true,
-        },
-        {
-          title: "Challenge 7",
-          completed: true,
-        },
-        {
-          title: "Challenge 8",
-          completed: true,
-        },
-        {
-          title: "Challenge 10",
-          completed: false,
-        },
-        {
-          title: "Challenge 11",
-          completed: false,
-        },
-      ],
+      formattedChaptersData: [],
+      formattedLineChart: {
+        challenges_titles: [],
+        p1_values: [],
+        p2_values: [],
+        c_values: [],
+      },
+      formattedDoughnutChart: {
+        challenges_failed: 0,
+        challenges_complete: 0,
+        challenges_untried: 0,
+      },
+      rawChapterData: [],
       isLoadingData: false,
     };
   },
@@ -149,7 +123,47 @@ export default {
     async loadDashboardData() {
       this.isLoadingData = true;
       const dashBoardData = await this.getDashboardData();
+      this.rawChapterData = dashBoardData;
+      this.formatDashBoardData();
+      this.formatChallengeData();
       this.isLoadingData = false;
+    },
+    formatDashBoardData() {
+      this.formattedChaptersData.push({
+        title: "Account Created",
+        description: `Welcome, ${this.$store.getters["authStore/getUserDetails"].username}!`,
+        completed: true,
+      });
+      for (const chapterId in this.rawChapterData) {
+        this.formattedChaptersData.push({
+          title: this.rawChapterData[chapterId].chapter_name,
+          description: this.rawChapterData[chapterId].chapter_description ?? "",
+          completed: this.rawChapterData[chapterId].perc_done == 100,
+        });
+      }
+    },
+    formatChallengeData() {
+      for (const chapterId in this.rawChapterData) {
+        for (const challengeId in this.rawChapterData[chapterId].challenges) {
+          const challenge =
+            this.rawChapterData[chapterId].challenges[challengeId];
+          if (challenge.completed) {
+            this.formattedDoughnutChart.challenges_complete++;
+            this.formattedLineChart.challenges_titles.push(
+              challenge.challenge_name
+            );
+            this.formattedLineChart.p1_values.push(challenge.p1);
+            this.formattedLineChart.p2_values.push(challenge.p2);
+            this.formattedLineChart.c_values.push(challenge.C);
+          } else {
+            if (challenge.C == 0) {
+              this.formattedDoughnutChart.challenges_untried++;
+            } else {
+              this.formattedDoughnutChart.challenges_failed++;
+            }
+          }
+        }
+      }
     },
   },
 };

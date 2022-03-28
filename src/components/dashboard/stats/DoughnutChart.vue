@@ -11,22 +11,25 @@ Chart.register(...registerables);
 export default defineComponent({
   name: "App",
   components: { DoughnutChart },
-  setup() {
-    const dataValues = ref([30, 40, 60, 70, 5]);
+  setup(props) {
+    const dataValues = ref([
+      props.graphData.challenges_untried,
+      props.graphData.challenges_failed,
+      props.graphData.challenges_complete,
+    ]);
+    console.log(dataValues.value);
     const toggleLegend = ref(true);
 
     const testData = computed<ChartData<"doughnut">>(() => ({
-      labels: ["Paris", "Nîmes", "Toulon", "Perpignan", "Autre"],
+      labels: [
+        "Untried Challenges",
+        "Failed Challenges",
+        "Complete Challenges",
+      ],
       datasets: [
         {
           data: dataValues.value,
-          backgroundColor: [
-            "#77CEFF",
-            "#0079AF",
-            "#123E6B",
-            "#97B0C4",
-            "#A5C8ED",
-          ],
+          backgroundColor: ["#77CEFF", "#4C2B36", "#16DB65"],
         },
       ],
     }));
@@ -74,6 +77,13 @@ export default defineComponent({
       doughnutChartRef,
       doughnutChartProps,
     };
+  },
+  props: {
+    graphData: {
+      name: "Graph Data",
+      type: Object,
+      default: {},
+    },
   },
 });
 </script>

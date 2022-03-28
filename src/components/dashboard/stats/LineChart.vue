@@ -11,21 +11,32 @@ Chart.register(...registerables);
 export default {
   name: "Home",
   components: { LineChart },
-  setup() {
+  setup(props) {
+    const labels = props.graphData.challenges_titles;
+    const p1_data = props.graphData.p1_values;
+    const p2_data = props.graphData.p2_values;
+    const c_data = props.graphData.c_values;
+
     const getData = computed<ChartData<"line">>(() => ({
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels: labels,
       datasets: [
         {
-          label: "Bitcoin",
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: "P1(how similar your solution is to ours)",
+          data: p1_data,
           fill: false,
           borderColor: "#4bc0c0",
         },
         {
-          label: "Ethereum",
-          data: [28, 48, 40, 19, 86, 27, 90],
+          label: "P2(how correct is your solution based on our tests)",
+          data: p2_data,
           fill: false,
-          borderColor: "#565656",
+          borderColor: "#EE6352",
+        },
+        {
+          label: "C(the correctness % calulcating as C = 20%P1 + 80%P2)",
+          data: c_data,
+          fill: false,
+          borderColor: "#8AC926",
         },
       ],
     }));
@@ -35,6 +46,10 @@ export default {
         legend: {
           display: true,
           position: "bottom",
+        },
+        title: {
+          display: true,
+          text: "Chart displaying progress on P1, P2, C",
         },
       },
     }));
@@ -50,6 +65,13 @@ export default {
       lineChartProps,
       lineChartRef,
     };
+  },
+  props: {
+    graphData: {
+      name: "Graph Data",
+      type: Object,
+      default: {},
+    },
   },
 };
 </script>
