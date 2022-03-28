@@ -26,7 +26,6 @@ import "prismjs/themes/prism-tomorrow.css";
 //for syntax checking
 //TODO decide on the tool that you are going to use for syntax validating
 import * as esprima from "esprima"; //Note:code is not vaildate run time error because it uses ast parser to analyze the correct syntax.
-import Interpreter from "js-interpreter"; //this does not support 'let' declarations.
 
 export default {
   components: {
@@ -46,6 +45,7 @@ export default {
       try {
         esprima.parseScript(this.code);
         this.stat = "correct";
+        this.confetti();
       } catch (e) {
         let ep = e.message.split(":");
         this.error(ep[0], ep[1]);
@@ -55,6 +55,34 @@ export default {
       this.stat = "err";
       console.log(line);
       console.log(msg);
+    },
+    confetti() {
+      let emitters = [];
+      for(let i = 20; i < 100; i+=20){
+        emitters.push({
+          life: {
+              duration: 1,
+              count: 4,
+            },
+            position: {
+              x: i,
+              y: 0,
+            },
+            particles: {
+              move: {
+                direction: "buttom",
+              },
+              color: {
+                value: ["#A2FAA3", "#78C0E0", "#FFE9F3", "#F4BFDB", "#E07A5F"],
+              },
+            },
+        })
+      }
+
+      tsParticles.load("tsparticles", {
+        emitters: emitters,
+        preset: "confetti",
+      });
     },
   },
   watch: {
