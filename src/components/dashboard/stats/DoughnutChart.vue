@@ -46,7 +46,7 @@ export default defineComponent({
         },
         title: {
           display: true,
-          text: "Completed: C is at least 80%, Failed: C lower than 80%",
+          text: "Completed: C is at least 80%, Failed: C is lower than 80%",
           position: "bottom"
         },
       },

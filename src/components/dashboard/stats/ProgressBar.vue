@@ -1,34 +1,37 @@
 <template>
-    <div class="status-bar" :style="'width: ' + widthOfStatusBar + '%;'">
-      <div
-        class="current-status"
-        id="current_status"
-        :style="
-          'width:' +
-          widthOfCurrentStatus +
-          '%; transition: width ' +
-          completedNodesN * 500 +
-          'ms linear 0s'
-        "
-      ></div>
-    </div>
-    <ul class="progress_bar">
-      <li
-        v-for="(o, index) in checkpoints"
-        v-bind:key="index"
-        class="bubble"
-        v-bind:id="'bubble_' + index"
-        v-bind:style="
-          'width:' +
-          widthOfStage +
-          '%; transition: ' +
-          500 * index +
-          'ms linear 0s'
-        "
-      >
-        <span style="width: 10px; height:20px;">{{ o.title }} <br> {{ o.description }} </span>
-      </li>
-    </ul>
+  <div class="status-bar" :style="'width: ' + widthOfStatusBar + '%;'">
+    <div
+      class="current-status"
+      id="current_status"
+      :style="
+        'width:' +
+        widthOfCurrentStatus +
+        '%; transition: width ' +
+        completedNodesN * 500 +
+        'ms linear 0s'
+      "
+    ></div>
+  </div>
+  <ul class="progress_bar">
+    <li
+      v-for="(o, index) in checkpoints"
+      v-bind:key="index"
+      class="bubble"
+      v-bind:id="'bubble_' + index + (uniqueKey ? '_' + uniqueKey : '')"
+      v-bind:style="
+        'width:' +
+        widthOfStage +
+        '%; transition: ' +
+        500 * index +
+        'ms linear 0s'
+      "
+    >
+      <span style="width: 10px; height: 20px"
+        >{{ o.title }} <br />
+        {{ o.description }}
+      </span>
+    </li>
+  </ul>
 </template>
 <script>
 export default {
@@ -37,6 +40,11 @@ export default {
       name: "Checkpoints",
       type: Array,
       default: [],
+    },
+    uniqueKey: {
+      name: "Unique Key for Bubble Ids",
+      type: String,
+      default: "",
     },
   },
   data: () => {
@@ -59,8 +67,8 @@ export default {
       this.completedNodesN = this.checkpoints.filter(
         (el) => el.completed
       ).length;
-
-      for (let i = 1; i < this.checkpoints.length - 1; i++) {
+      console.log(this.checkpoints);
+      for (let i = 1; i < this.checkpoints.length; i++) {
         if (!this.checkpoints[i].completed) continue;
         setTimeout(
           function () {
@@ -78,7 +86,9 @@ export default {
           function () {
             let classB =
               i + 1 == this.completedNodesN ? "visited current" : "visited";
-            let bubble = document.getElementById(`bubble_${i}`);
+            let bubble = document.getElementById(
+              `bubble_${i}${this.uniqueKey ? "_" + this.uniqueKey : ""}`
+            );
             if (bubble) {
               bubble.className += " " + classB;
             }

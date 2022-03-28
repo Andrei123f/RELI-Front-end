@@ -19,6 +19,7 @@
           text-transform: none;
           margin-top: 15px;
           margin-right: 15px;
+          text-decoration: none;
         "
       >
         <div class="sidebar-brand-text mx-3">Renderlingo</div>
@@ -26,7 +27,6 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0" />
 
     <!-- Nav Item - Dashboard -->
     <li
@@ -37,10 +37,25 @@
         <i class="fa fa-chart-bar fa-5x"></i><span>Dashboard</span>
       </router-link>
     </li>
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0" />
 
-    <!-- Nav Item - Progress Tracker -->
+
+    <!-- Nav Item - Challenge solver -->
+    <li
+      class="nav-item"
+      v-bind:class="{
+        active: this.$route.name == 'Dashboard/challenge/progress',
+      }"
+    >
+      <router-link class="nav-link" to="/challenge/progress">
+        <i class="fas fa-road"></i>
+        <span>Challenges Roadmap</span>
+      </router-link>
+    </li>
+
+    <!-- Divider -->
+
+    <!-- Nav Item - Achievements  FOR NOW DISABLED. TODO IMPLEMENT ACHIEVEMENTS FUNC-->
+    <!--
     <li
       class="nav-item"
       v-bind:class="{ active: this.$route.name == 'Dashboard/challenge/track' }"
@@ -48,27 +63,23 @@
       <a class="nav-link">
         <i class="fas fa-award"></i>
         <span>Achievements</span>
-        
-        </a
-      >
+      </a>
     </li>
+    -->
 
-    <!-- Divider -->
-    <hr class="sidebar-divider my-0" />
 
-    <!-- Nav Item - Progress Tracker -->
+    <!-- Nav Item - Challenge solver -->
     <li
       class="nav-item"
       v-bind:class="{ active: this.$route.name == 'Dashboard/challenge/solve' }"
     >
-    <router-link class="nav-link" to="/challenge/solve"> 
-      <i class="fas fa-book-reader"></i>
+      <router-link class="nav-link" to="/challenge/solve">
+        <i class="fas fa-book-reader"></i>
         <span>Solve a new challenge</span>
-    </router-link>
+      </router-link>
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider" />
     <div class="text-right d-none d-md-inline">
       <button
         class="rounded-circle border-0"
