@@ -17,7 +17,6 @@ export default defineComponent({
       props.graphData.challenges_failed,
       props.graphData.challenges_complete,
     ]);
-    console.log(dataValues.value);
     const toggleLegend = ref(true);
 
     const testData = computed<ChartData<"doughnut">>(() => ({
