@@ -23,7 +23,7 @@ export default defineComponent({
       labels: [
         "Untried Challenges",
         "Failed Challenges",
-        "Complete Challenges",
+        "Completed Challenges",
       ],
       datasets: [
         {
@@ -46,7 +46,8 @@ export default defineComponent({
         },
         title: {
           display: true,
-          text: "The usage of something blabla",
+          text: "Completed: C is at least 80%, Failed: C lower than 80%",
+          position: "bottom"
         },
       },
     }));

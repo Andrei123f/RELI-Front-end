@@ -36,7 +36,7 @@
             "
           >
             <h6 class="m-0 font-weight-bold text-primary">
-              Some other chart that looks cool
+              Challenge progress - P1, P2 and C stats
               <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>
@@ -62,7 +62,7 @@
             "
           >
             <h6 class="m-0 font-weight-bold text-primary">
-              This chart displays something interesting I guess
+              Challenge progress - challenge stats
               <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>

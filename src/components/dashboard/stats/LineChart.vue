@@ -21,19 +21,19 @@ export default {
       labels: labels,
       datasets: [
         {
-          label: "P1(how similar your solution is to ours)",
+          label: "P1",
           data: p1_data,
           fill: false,
           borderColor: "#4bc0c0",
         },
         {
-          label: "P2(how correct is your solution based on our tests)",
+          label: "P2",
           data: p2_data,
           fill: false,
           borderColor: "#EE6352",
         },
         {
-          label: "C(the correctness % calulcating as C = 20%P1 + 80%P2)",
+          label: "C",
           data: c_data,
           fill: false,
           borderColor: "#8AC926",
@@ -49,7 +49,8 @@ export default {
         },
         title: {
           display: true,
-          text: "Chart displaying progress on P1, P2, C",
+          text: "P1: how similar your solution is to ours,  P2: how correct is your solution based on our tests,  C: the correctness of the answer based on P1 and P2",
+          position: "bottom",
         },
       },
     }));
