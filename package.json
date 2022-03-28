@@ -28,7 +28,8 @@
     "vue-router": "^4.0.13",
     "vue3-cookies": "^1.0.6",
     "vuex": "^4.0.2",
-    "vuex-persistedstate": "^4.1.0"
+    "vuex-persistedstate": "^4.1.0",
+    "x-axios-progress-bar": "^1.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.2",

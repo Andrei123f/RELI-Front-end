@@ -20,6 +20,8 @@ import { mapGetters } from "vuex";
 import SuccessNotification from "./components/notifications/SuccessNotification.vue";
 import InfoNotfication from "./components/notifications/InfoNotfication.vue";
 import DangerNotification from "./components/notifications/DangerNotification.vue";
+import { loadProgressBar } from "x-axios-progress-bar";
+loadProgressBar();
 export default {
   data: () => {
     return {
@@ -156,5 +158,9 @@ export default {
 }
 #divMsg {
   margin-bottom: 0px;
+}
+#nprogress .bar {
+  background: #29BF12 !important;
+  height:5px;
 }
 </style>
