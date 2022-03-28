@@ -28,7 +28,7 @@ export default defineComponent({
       datasets: [
         {
           data: dataValues.value,
-          backgroundColor: ["#77CEFF", "#4C2B36", "#16DB65"],
+          backgroundColor: ["#77CEFF", "#ED6A5A", "#16DB65"],
         },
       ],
     }));
