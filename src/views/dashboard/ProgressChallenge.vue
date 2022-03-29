@@ -1,13 +1,11 @@
 <template>
   <div class="container-fluid">
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">
-        Challenges roadmap<span style="font-size:23px">🧭</span>
+        Challenges roadmap<span style="font-size: 23px">🧭</span>
       </h1>
     </div>
     <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
-    <!-- Content Row -->
     <div
       class="row"
       v-for="(chapter, index) in formattedChallengesData"
@@ -21,7 +19,8 @@
               color: chapter.perc_done == 100 ? '#008148' : 'gray',
             }"
           >
-            {{ chapter.chapter_name }}:  {{ chapter.chapter_description }} {{chapter.perc_done == 100 ? '- Completed' : ''}}
+            {{ chapter.chapter_name }}: {{ chapter.chapter_description }}
+            {{ chapter.perc_done == 100 ? "- Completed" : "" }}
           </h6>
         </div>
         <div class="card-body" v-if="!isLoadingData">
@@ -33,7 +32,6 @@
       </div>
     </div>
     <div class="row"></div>
-    <!-- Content Row -->
   </div>
 </template>
 

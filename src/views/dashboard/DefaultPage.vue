@@ -1,10 +1,10 @@
 <template>
   <div class="container-fluid">
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 text-gray-800">Dashboard <span style="font-size:23px">📈</span></h1>
+      <h1 class="h3 mb-0 text-gray-800">
+        Dashboard <span style="font-size: 23px">📈</span>
+      </h1>
     </div>
-    <!-- Content Row -->
     <div class="row">
       <div class="col-xs-12 col-lg-12">
         <div class="card-header card shadow mb-4" align-items-center>
@@ -19,12 +19,9 @@
       </div>
     </div>
     <div class="row"></div>
-    <!-- Content Row -->
     <div class="row">
-      <!-- Area Chart -->
       <div class="col-xl-8 col-lg-7">
         <div class="card shadow mb-4">
-          <!-- Card Header - Dropdown -->
           <div
             class="
               card-header
@@ -40,17 +37,14 @@
               <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>
-          <!-- Card Body -->
           <div class="card-body" v-if="!isLoadingData">
             <LineChartVue :graphData="formattedLineChart"></LineChartVue>
           </div>
         </div>
       </div>
 
-      <!-- Pie Chart -->
       <div class="col-xl-4 col-lg-5">
         <div class="card shadow mb-4">
-          <!-- Card Header - Dropdown -->
           <div
             class="
               card-header
@@ -66,7 +60,6 @@
               <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
             </h6>
           </div>
-          <!-- Card Body -->
           <div class="card-body" v-if="!isLoadingData">
             <DoughnutChartVue
               :graphData="formattedDoughnutChart"
