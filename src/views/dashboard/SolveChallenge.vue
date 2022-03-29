@@ -9,7 +9,59 @@
               <span v-if="isLoadingData" style="float: center">
                 Loading Challenge <i class="fas fa-spinner fa-pulse"></i>
               </span>
-              <span v-else> Challenge Description </span>
+              <span v-else>
+                Challenge Description
+                <div class="dropdown mb-4" style="float: right">
+                  <a
+                    style="
+                      float: right;
+                      margin: 0;
+                      text-align: center;
+                      padding: 0;
+                      text-decoration: none;
+                      cursor: pointer;
+                    "
+                    id="dropdownMenuButton"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa-solid fa-glasses"></i> Current stats
+                  </a>
+                  <div
+                    class="dropdown-menu animated--fade-in dropdown-menu-right"
+                    aria-labelledby="dropdownMenuButton"
+                  >
+                    <a class="dropdown-item"
+                      ><strong>C: </strong>
+                      {{
+                        challengeDetails.challengeDetails
+                          ? +challengeDetails.challengeDetails.C.toFixed(2) ??
+                            0.0
+                          : ""
+                      }}%</a
+                    >
+                    <a class="dropdown-item"
+                      ><strong>P1: </strong>
+                      {{
+                        challengeDetails.challengeDetails
+                          ? +challengeDetails.challengeDetails.p1.toFixed(2) ??
+                            0.0
+                          : ""
+                      }}%</a
+                    >
+                    <a class="dropdown-item"
+                      ><strong>P2: </strong>
+                      {{
+                        challengeDetails.challengeDetails
+                          ? +challengeDetails.challengeDetails.p2.toFixed(2) ??
+                            0.0
+                          : ""
+                      }}%</a
+                    >
+                  </div>
+                </div>
+              </span>
             </h6>
           </div>
           <div class="card-body">
@@ -38,24 +90,48 @@
                 {{ codeSyntaxError.error_line }}:
                 {{ codeSyntaxError.error_text }}
               </span>
-              <a
-                v-if="codeSyntaxError.status == 'CORRECT'"
-                @click="submitAnswer"
-                class="btn-primary"
-                style="
-                  float: right;
-                  margin: 0;
-                  width: 150px;
-                  height: 20px;
-                  text-align: center;
-                  padding: 0;
-                  text-decoration: none;
-                  cursor: pointer;
-                  border-radius: 15px 50px 30px;
-                "
-              >
-                Submit answer
-              </a>
+              <span v-if="codeSyntaxError.status == 'CORRECT'">
+                <a
+                  v-if="
+                    challengeDetails.challengeDetails &&
+                    challengeDetails.challengeDetails.C == 100
+                  "
+                  @click="loadNextChallenge"
+                  class="btn-primary"
+                  style="
+                    float: right;
+                    margin: 0;
+                    width: 150px;
+                    height: 20px;
+                    text-align: center;
+                    padding: 0;
+                    text-decoration: none;
+                    cursor: pointer;
+                    border-radius: 15px 50px 30px;
+                  "
+                >
+                  Get next challenge
+                </a>
+                <a
+                  v-else
+                  @click="submitAnswer"
+                  class="btn-primary"
+                  style="
+                    float: right;
+                    margin: 0;
+                    width: 150px;
+                    height: 20px;
+                    text-align: center;
+                    padding: 0;
+                    text-decoration: none;
+                    cursor: pointer;
+                    border-radius: 15px 50px 30px;
+                  "
+                >
+                  Submit answer
+                </a>
+              </span>
+
               <span v-if="isVerifyingSol" style="float: center">
                 - verifying solution <i class="fas fa-spinner fa-pulse"></i>
               </span>
@@ -160,6 +236,9 @@ export default {
           `API submission failed: ${response.message}`,
         ]);
       }
+      this.challengeDetails.challengeDetails.C = response.C;
+      this.challengeDetails.challengeDetails.p1 = response.p1;
+      this.challengeDetails.challengeDetails.p2 = response.p2;
       this.errStack = response.testFailedStack;
       this.passStack = response.testPassedStack;
 
