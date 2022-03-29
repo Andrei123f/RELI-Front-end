@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import authStore from "./authStore";
 import dashboardStore from "./dashboardStore";
+import challengeStore from "./challengeStore";
 import createPersistedState from "vuex-persistedstate";
 import SecureLS from "secure-ls";
 
@@ -12,11 +13,12 @@ const store = createStore({
   modules: {
     authStore,
     dashboardStore,
+    challengeStore,
   },
   plugins: [
     createPersistedState({
       key: "renderlingo",
-      paths: ["authStore", "dashboardStore"],
+      paths: ["authStore", "dashboardStore", "challengeStore"],
       storage: {
         getItem: (key) => ls.get(key),
         setItem: (key, value) => ls.set(key, value),

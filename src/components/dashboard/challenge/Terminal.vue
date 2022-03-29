@@ -31,8 +31,14 @@ export default {
   components: {
     PrismEditor,
   },
+  props: {
+    code: {
+      name: "User Code",
+      type: String,
+      default: "",
+    },
+  },
   data: () => ({
-    code: "",
     t: null,
     err: null,
     stat: null,
@@ -45,6 +51,11 @@ export default {
       try {
         esprima.parseScript(this.code);
         this.stat = "correct";
+        this.emitter.emit("codeSyntaxError", {
+          status: "CORRECT",
+          error_line: 0,
+          error_text: "",
+        });
         this.confetti();
       } catch (e) {
         let ep = e.message.split(":");
@@ -53,30 +64,33 @@ export default {
     },
     error(line, msg) {
       this.stat = "err";
-      console.log(line);
-      console.log(msg);
+      this.emitter.emit("codeSyntaxError", {
+        status: "ERROR",
+        error_line: line,
+        error_text: msg,
+      });
     },
     confetti() {
       let emitters = [];
-      for(let i = 20; i < 100; i+=20){
+      for (let i = 20; i < 100; i += 20) {
         emitters.push({
           life: {
-              duration: 1,
-              count: 4,
+            duration: 1,
+            count: 4,
+          },
+          position: {
+            x: i,
+            y: 0,
+          },
+          particles: {
+            move: {
+              direction: "buttom",
             },
-            position: {
-              x: i,
-              y: 0,
+            color: {
+              value: ["#A2FAA3", "#78C0E0", "#FFE9F3", "#F4BFDB", "#E07A5F"],
             },
-            particles: {
-              move: {
-                direction: "buttom",
-              },
-              color: {
-                value: ["#A2FAA3", "#78C0E0", "#FFE9F3", "#F4BFDB", "#E07A5F"],
-              },
-            },
-        })
+          },
+        });
       }
 
       tsParticles.load("tsparticles", {
@@ -88,6 +102,11 @@ export default {
   watch: {
     code() {
       this.stat = "loading";
+      this.emitter.emit("codeSyntaxError", {
+        status: "PENDING",
+        error_line: 0,
+        error_text: "",
+      });
       if (this.t) {
         clearTimeout(this.t);
         this.t = setTimeout(this.evalSyntax, 500);
