@@ -28,6 +28,9 @@ const challengeStore = {
     SET_CURRENT_CHALLENGE_chapter_id(state, chapter_id) {
       state.currChallenge.chapter_id = chapter_id;
     },
+    SET_USER_ANSWER_TEXT(state, user_answer) {
+      state.userSolution.answer_text = user_answer;
+    },
   },
   actions: {
     async fetchNextChallenge({ dispatch, commit }) {
@@ -63,6 +66,36 @@ const challengeStore = {
       }
       return state.currChallenge;
     },
+    async submitUserAnswer({ dispatch, state }) {
+      const accessToken = await dispatch(
+        "authStore/getValidAccessToken",
+        {},
+        { root: true }
+      );
+
+      const response = await axios
+        .post(
+          API_URL + "challenge/evaluate",
+          {
+            code: state.userSolution.answer_text,
+            chapter_code: state.currChallenge.chapter_id,
+            challenge_code: state.currChallenge.challenge_id,
+            bindings: {}, //for now bindings is empty because we are still experiencing with this
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        )
+        .catch((err) => {
+          console.log(
+            "Something went wrong when submitting user's solution. Error: "
+          );
+          console.log(err);
+        });
+      return response.data;
+    },
   },
   getters: {
     getCurrentChallenge: (state) => state.currChallenge,
@@ -70,6 +103,7 @@ const challengeStore = {
     getCurrentChallengeChapterId: (state) => state.currChallenge.chapter_id,
     getCurrentChallengeChallengeDetails: (state) =>
       state.currChallenge.challengeDetails,
+    getUserSolution: (state) => state.userSolution.answer_text,
   },
 };
 export default challengeStore;

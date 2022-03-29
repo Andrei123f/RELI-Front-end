@@ -24,8 +24,8 @@ import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css";
 
 //for syntax checking
-//TODO decide on the tool that you are going to use for syntax validating
 import * as esprima from "esprima"; //Note:code is not vaildate run time error because it uses ast parser to analyze the correct syntax.
+import { mapMutations } from "vuex";
 
 export default {
   components: {
@@ -44,6 +44,9 @@ export default {
     stat: null,
   }),
   methods: {
+    ...mapMutations({
+      updateUserAnswerCode: "challengeStore/SET_USER_ANSWER_TEXT",
+    }),
     highlighter(code) {
       return highlight(code, languages.js);
     },
@@ -56,7 +59,7 @@ export default {
           error_line: 0,
           error_text: "",
         });
-        this.confetti();
+        this.updateUserAnswerCode(this.code);
       } catch (e) {
         let ep = e.message.split(":");
         this.error(ep[0], ep[1]);
@@ -68,34 +71,6 @@ export default {
         status: "ERROR",
         error_line: line,
         error_text: msg,
-      });
-    },
-    confetti() {
-      let emitters = [];
-      for (let i = 20; i < 100; i += 20) {
-        emitters.push({
-          life: {
-            duration: 1,
-            count: 4,
-          },
-          position: {
-            x: i,
-            y: 0,
-          },
-          particles: {
-            move: {
-              direction: "buttom",
-            },
-            color: {
-              value: ["#A2FAA3", "#78C0E0", "#FFE9F3", "#F4BFDB", "#E07A5F"],
-            },
-          },
-        });
-      }
-
-      tsParticles.load("tsparticles", {
-        emitters: emitters,
-        preset: "confetti",
       });
     },
   },

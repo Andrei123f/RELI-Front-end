@@ -43,7 +43,7 @@
               </span>
               <a
                 v-if="codeSyntaxError.status == 'CORRECT'"
-                @click="submitAnswer()"
+                @click="submitAnswer"
                 class="btn-primary"
                 style="
                   float: right;
@@ -68,7 +68,7 @@
             <Terminal
               :code="
                 challengeDetails.challengeDetails
-                  ? challengeDetails.challengeDetails.user_answer ?? 'hello'
+                  ? challengeDetails.challengeDetails.user_answer ?? ''
                   : ''
               "
             ></Terminal>
@@ -77,11 +77,34 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <TestsStack
+      v-if="passStack.length != 0 || errStack.length != 0"
+      style="width: 50%"
+      :title="'Tests Failed'"
+      :colourTitle="'#ED6A5A'"
+      :colourTitleTests="'#ED6A5A'"
+      :colourMsgTests="'#ED6A5A'"
+      :messages="errStack"
+      :loading="isVerifyingSol"
+    ></TestsStack>
+    <TestsStack
+      v-if="passStack.length != 0 || errStack.length != 0"
+      style="width: 50%"
+      :title="'Tests Passed'"
+      :colourTitle="'#00800d'"
+      :colourTitleTests="'#00800d'"
+      :colourMsgTests="'#00800d'"
+      :messages="passStack"
+      :loading="isVerifyingSol"
+    ></TestsStack>
+  </div>
 </template>
 
 <script>
 import Terminal from "../../components/dashboard/challenge/Terminal.vue";
-import { mapActions } from "vuex";
+import TestsStack from "../../components/dashboard/challenge/TestsStack.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data: () => {
@@ -94,6 +117,8 @@ export default {
         error_line: 0,
         error_text: "",
       },
+      errStack: [],
+      passStack: [],
     };
   },
   setup() {},
@@ -106,10 +131,16 @@ export default {
   methods: {
     ...mapActions({
       getNextChallenge: "challengeStore/getNextChallenge",
+      submitUserAnswer: "challengeStore/submitUserAnswer",
+    }),
+    ...mapGetters({
+      getUserSol: "challengeStore/getUserSolution",
     }),
     async loadNextChallenge() {
       this.isLoadingData = true;
-      this.challengeDetails = await this.getNextChallenge();
+      const data = (this.challengeDetails = await this.getNextChallenge());
+      this.errStack = data.challengeDetails.tests_failed ?? [];
+      this.passStack = data.challengeDetails.tests_passed ?? [];
       this.isLoadingData = false;
     },
     updateErrorSyntax(status, line, msg) {
@@ -117,12 +148,58 @@ export default {
       this.codeSyntaxError.error_line = line;
       this.codeSyntaxError.error_text = msg;
     },
-    submitAnswer() {
+    async submitAnswer() {
       this.isVerifyingSol = true;
+      const response = await this.submitUserAnswer();
+      if (response.result == "SUCCESS") {
+        this.emitter.emit("displayMessage", [
+          "success",
+          `API submission succeded: ${response.message}`,
+        ]);
+        this.confetti();
+      } else {
+        this.emitter.emit("displayMessage", [
+          "error",
+          `API submission failed: ${response.message}`,
+        ]);
+      }
+      this.errStack = response.testFailedStack;
+      this.passStack = response.testPassedStack;
+
+      this.isVerifyingSol = false;
+    },
+    confetti() {
+      let emitters = [];
+      for (let i = 20; i < 100; i += 20) {
+        emitters.push({
+          life: {
+            duration: 1,
+            count: 4,
+          },
+          position: {
+            x: i,
+            y: 0,
+          },
+          particles: {
+            move: {
+              direction: "buttom",
+            },
+            color: {
+              value: ["#A2FAA3", "#78C0E0", "#FFE9F3", "#F4BFDB", "#E07A5F"],
+            },
+          },
+        });
+      }
+
+      tsParticles.load("tsparticles", {
+        emitters: emitters,
+        preset: "confetti",
+      });
     },
   },
   components: {
     Terminal,
+    TestsStack,
   },
 };
 </script>
