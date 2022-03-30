@@ -41,8 +41,9 @@
                       ><strong>C: </strong>
                       {{
                         challengeDetails.challengeDetails
-                          ? +challengeDetails.challengeDetails.C.toFixed(2) ??
-                            0.0
+                          ? challengeDetails.challengeDetails.C
+                            ? +challengeDetails.challengeDetails.C.toFixed(2)
+                            : ""
                           : ""
                       }}%</a
                     >
@@ -50,8 +51,9 @@
                       ><strong>P1: </strong>
                       {{
                         challengeDetails.challengeDetails
-                          ? +challengeDetails.challengeDetails.p1.toFixed(2) ??
-                            0.0
+                          ? challengeDetails.challengeDetails.p1
+                            ? +challengeDetails.challengeDetails.p1.toFixed(2)
+                            : ""
                           : ""
                       }}%</a
                     >
@@ -59,8 +61,9 @@
                       ><strong>P2: </strong>
                       {{
                         challengeDetails.challengeDetails
-                          ? +challengeDetails.challengeDetails.p2.toFixed(2) ??
-                            0.0
+                          ? challengeDetails.challengeDetails.p2
+                            ? +challengeDetails.challengeDetails.p2.toFixed(2)
+                            : ""
                           : ""
                       }}%</a
                     >
@@ -69,7 +72,7 @@
               </span>
             </h6>
           </div>
-          <div class="card-body" v-if="!isLoadingData">
+          <div class="card-body terminal" v-if="!isLoadingData">
             <div
               class="challenge_container"
               v-highlightjs
@@ -113,7 +116,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-lg-6">
         <div class="card shadow mb-4">
           <div class="card-header py-3">
@@ -334,13 +336,14 @@ export default {
 <style scoped>
 .card-body {
   height: 700px;
+  float: right;
 }
 
-.challenge_container ::v-deep .challenge_description {
+.challenge_container ::v-deep(.challenge_description) {
   color: black;
   font-size: 18px;
 }
-.challenge_container ::v-deep .challenge_clue {
+.challenge_container ::v-deep(challenge_clue) {
   font-style: italic;
   color: black;
   font-weight: bold;
@@ -348,11 +351,11 @@ export default {
   font-size: 18px;
 }
 
-.challenge_container ::v-deep .given_variable {
+.challenge_container ::v-deep(given_variable) {
   background-color: #272822;
 }
 
-.challenge_container ::v-deep .challenge_example {
+.challenge_container ::v-deep(challenge_example) {
   color: black;
   font-size: 18px;
 }
