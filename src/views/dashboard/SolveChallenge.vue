@@ -71,6 +71,7 @@
           </div>
           <div class="card-body" v-if="!isLoadingData">
             <div
+              class="challenge_container"
               v-highlightjs
               v-html="
                 challengeDetails.challengeDetails
@@ -93,9 +94,9 @@
                     cursor: pointer;
                   "
                 >
-                  See Solution - 
+                  See Solution -
                 </a>
-                 If you see the solution your progress<strong>
+                If you see the solution your progress<strong>
                   will not be tracked.</strong
                 >
               </p>
@@ -335,23 +336,23 @@ export default {
   height: 700px;
 }
 
-.challenge_description {
+.challenge_container ::v-deep .challenge_description {
   color: black;
   font-size: 18px;
 }
-
-.challenge_clue {
+.challenge_container ::v-deep .challenge_clue {
   font-style: italic;
   color: black;
   font-weight: bold;
 
   font-size: 18px;
 }
-.given_variable {
+
+.challenge_container ::v-deep .given_variable {
   background-color: #272822;
 }
 
-.challenge_example {
+.challenge_container ::v-deep .challenge_example {
   color: black;
   font-size: 18px;
 }
