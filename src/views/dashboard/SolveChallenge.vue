@@ -336,11 +336,11 @@ export default {
   height: 700px;
 }
 
-.challenge_container ::v-deep .challenge_description {
+.challenge_container ::v-deep(.challenge_description) {
   color: black;
   font-size: 18px;
 }
-.challenge_container ::v-deep .challenge_clue {
+.challenge_container ::v-deep(challenge_clue) {
   font-style: italic;
   color: black;
   font-weight: bold;
@@ -348,11 +348,11 @@ export default {
   font-size: 18px;
 }
 
-.challenge_container ::v-deep .given_variable {
+.challenge_container ::v-deep(given_variable) {
   background-color: #272822;
 }
 
-.challenge_container ::v-deep .challenge_example {
+.challenge_container ::v-deep(challenge_example) {
   color: black;
   font-size: 18px;
 }
