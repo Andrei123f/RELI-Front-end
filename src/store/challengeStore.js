@@ -11,6 +11,12 @@ const challengeStore = {
       chapter_id: 0,
       challengeDetails: {},
     },
+    currChapter: {
+      perc_done: 0,
+      chapter_name: '',
+      chapter_description: '',
+      chapter_id: '',
+    },
     userSolution: {
       answer_text: "",
       p1: 0,
@@ -27,6 +33,9 @@ const challengeStore = {
     },
     SET_CURRENT_CHALLENGE_chapter_id(state, chapter_id) {
       state.currChallenge.chapter_id = chapter_id;
+    },
+    SET_CURRENT_CHAPTER_DETAILS(state, chapter){
+      state.currChapter = chapter;
     },
     SET_USER_ANSWER_TEXT(state, user_answer) {
       state.userSolution.answer_text = user_answer;
@@ -54,6 +63,7 @@ const challengeStore = {
         commit("SET_CURRENT_CHALLENGE_DETAILS", response.data.challengeDetails);
         commit("SET_CURRENT_CHALLENGE_ID", response.data.challenge_id);
         commit("SET_CURRENT_CHALLENGE_chapter_id", response.data.chapter_id);
+        commit("SET_CURRENT_CHAPTER_DETAILS", response.data.chapterDetails);
       } else {
         console.log("Something went wrong and could not fetch chapters stats.");
       }
@@ -104,6 +114,7 @@ const challengeStore = {
     getCurrentChallengeChallengeDetails: (state) =>
       state.currChallenge.challengeDetails,
     getUserSolution: (state) => state.userSolution.answer_text,
+    getCurrChapterDetails: (state) => state.currChapter
   },
 };
 export default challengeStore;

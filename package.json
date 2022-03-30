@@ -27,6 +27,7 @@
     "vue-prism-editor": "^2.0.0-alpha.2",
     "vue-router": "^4.0.13",
     "vue3-cookies": "^1.0.6",
+    "vue3-highlightjs": "^1.0.5",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0",
     "x-axios-progress-bar": "^1.2.2"

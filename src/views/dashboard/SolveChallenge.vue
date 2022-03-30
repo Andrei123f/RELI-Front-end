@@ -10,7 +10,12 @@
                 Loading Challenge <i class="fas fa-spinner fa-pulse"></i>
               </span>
               <span v-else>
-                Challenge Description
+                {{ chapterDetails.chapter_name ?? "" }}:
+                {{
+                  challengeDetails.challengeDetails
+                    ? challengeDetails.challengeDetails.challenge_name ?? ""
+                    : ""
+                }}
                 <div class="dropdown mb-4" style="float: right">
                   <a
                     style="
@@ -64,12 +69,74 @@
               </span>
             </h6>
           </div>
-          <div class="card-body">
-            {{
-              challengeDetails.challengeDetails
-                ? challengeDetails.challengeDetails.challenge_text
-                : null
-            }}
+          <div class="card-body" v-if="!isLoadingData">
+            <div v-highlightjs>
+              <p class="challenge_description">
+                ✨ A variable is just a way to store information that can be
+                used or changed later by your program. Variables also provide a
+                way of labeling data with a descriptive name, so your program
+                can be understood more clearly by the others and yourself.
+              </p>
+              <br />
+              <p class="challenge_description">
+                📖 A variable can be defined as
+              </p>
+
+              <code>let da = 5;</code>
+              <br />
+              <p class="challenge_description">
+                📖 Instead of <b>let</b> you can use other statements, depending
+                on the behaviour you want from your program:
+              </p>
+              <ul class="challenge_description">
+                <li>
+                  <b>const</b> - the variable will not be able to be changed
+                  once it is declared
+                </li>
+                <li><b>var</b> - same behaviour as <b>let</b></li>
+              </ul>
+
+              <br />
+              <br />
+              <p class="challenge_description">
+                🔨 Now your task is to translate the following story
+              </p>
+              <p class="challenge_description">
+                You want to go to the supermarket to buy some food.
+                <span class="challenge_clue"
+                  >You need 50 pounds in your wallet to buy.</span
+                >
+              </p>
+              <p class="challenge_description">
+                ⚠️ When writing the code, use
+                <code style="display: inline">money</code> to determine the
+                amount of money you have in the wallet using
+                <b>what you have learnt so far</b>.
+              </p>
+            </div>
+
+            <br />
+            <br />
+            <div v-highlightjs>
+              <p>
+                <a
+                  @click="seeSolution"
+                  style="
+                    float: left;
+                    margin: 0;
+                    padding: 0;
+                    text-decoration: none;
+                    cursor: pointer;
+                  "
+                >
+                  See Solution
+                </a>
+                : If you see the solution your progress<strong> will not be tracked.</strong>
+              </p>
+              <code v-show="showSol">
+                let money = 50
+              </code>
+            </div>
           </div>
         </div>
       </div>
@@ -182,6 +249,8 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data: () => {
     return {
+      showSol: false,
+      chapterDetails: {},
       challengeDetails: {},
       isLoadingData: false,
       isVerifyingSol: false,
@@ -208,10 +277,12 @@ export default {
     }),
     ...mapGetters({
       getUserSol: "challengeStore/getUserSolution",
+      getCurrChapterDetails: "challengeStore/getCurrChapterDetails",
     }),
     async loadNextChallenge() {
       this.isLoadingData = true;
       const data = (this.challengeDetails = await this.getNextChallenge());
+      this.chapterDetails = this.getCurrChapterDetails();
       this.errStack = data.challengeDetails.tests_failed ?? [];
       this.passStack = data.challengeDetails.tests_passed ?? [];
       this.isLoadingData = false;
@@ -243,6 +314,9 @@ export default {
       this.passStack = response.testPassedStack;
 
       this.isVerifyingSol = false;
+    },
+    seeSolution(){
+      this.showSol = !this.showSol;
     },
     confetti() {
       let emitters = [];
@@ -283,5 +357,26 @@ export default {
 <style scoped>
 .card-body {
   height: 700px;
+}
+
+.challenge_description {
+  color: black;
+  font-size: 18px;
+}
+
+.challenge_clue {
+  font-style: italic;
+  color: black;
+  font-weight: bold;
+
+  font-size: 18px;
+}
+.given_variable {
+  background-color: #272822;
+}
+
+.challenge_example {
+  color: black;
+  font-size: 18px;
 }
 </style>
