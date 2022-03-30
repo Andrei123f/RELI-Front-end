@@ -10,12 +10,13 @@ const challengeStore = {
       challenge_id: 0,
       chapter_id: 0,
       challengeDetails: {},
+      solution_shown: false,
     },
     currChapter: {
       perc_done: 0,
-      chapter_name: '',
-      chapter_description: '',
-      chapter_id: '',
+      chapter_name: "",
+      chapter_description: "",
+      chapter_id: "",
     },
     userSolution: {
       answer_text: "",
@@ -34,7 +35,10 @@ const challengeStore = {
     SET_CURRENT_CHALLENGE_chapter_id(state, chapter_id) {
       state.currChallenge.chapter_id = chapter_id;
     },
-    SET_CURRENT_CHAPTER_DETAILS(state, chapter){
+    SET_CURRENT_CHALLENGE_SOLUTION_SHOWN(state, sol_shown) {
+      state.currChallenge.solution_shown = sol_shown;
+    },
+    SET_CURRENT_CHAPTER_DETAILS(state, chapter) {
       state.currChapter = chapter;
     },
     SET_USER_ANSWER_TEXT(state, user_answer) {
@@ -64,6 +68,10 @@ const challengeStore = {
         commit("SET_CURRENT_CHALLENGE_ID", response.data.challenge_id);
         commit("SET_CURRENT_CHALLENGE_chapter_id", response.data.chapter_id);
         commit("SET_CURRENT_CHAPTER_DETAILS", response.data.chapterDetails);
+        commit(
+          "SET_CURRENT_CHALLENGE_SOLUTION_SHOWN",
+          response.data.challengeDetails.solution_shown
+        );
       } else {
         console.log("Something went wrong and could not fetch chapters stats.");
       }
@@ -90,6 +98,7 @@ const challengeStore = {
             code: state.userSolution.answer_text,
             chapter_code: state.currChallenge.chapter_id,
             challenge_code: state.currChallenge.challenge_id,
+            solution_shown: state.currChallenge.solution_shown,
             bindings: {}, //for now bindings is empty because we are still experiencing with this
           },
           {
@@ -114,7 +123,7 @@ const challengeStore = {
     getCurrentChallengeChallengeDetails: (state) =>
       state.currChallenge.challengeDetails,
     getUserSolution: (state) => state.userSolution.answer_text,
-    getCurrChapterDetails: (state) => state.currChapter
+    getCurrChapterDetails: (state) => state.currChapter,
   },
 };
 export default challengeStore;

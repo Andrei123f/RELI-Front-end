@@ -92,6 +92,7 @@ export default {
         challenges_failed: 0,
         challenges_complete: 0,
         challenges_untried: 0,
+        challenges_sol_shown: 0,
       },
       rawChapterData: [],
       isLoadingData: false,
@@ -140,7 +141,7 @@ export default {
         for (const challengeId in this.rawChapterData[chapterId].challenges) {
           const challenge =
             this.rawChapterData[chapterId].challenges[challengeId];
-          if (challenge.completed) {
+          if (challenge.completed && !challenge.solution_shown) {
             this.formattedDoughnutChart.challenges_complete++;
             this.formattedLineChart.challenges_titles.push(
               challenge.challenge_name
@@ -151,6 +152,8 @@ export default {
           } else {
             if (challenge.C == 0) {
               this.formattedDoughnutChart.challenges_untried++;
+            } else if (challenge.solution_shown) {
+              this.formattedDoughnutChart.challenges_sol_shown++;
             } else {
               this.formattedDoughnutChart.challenges_failed++;
             }

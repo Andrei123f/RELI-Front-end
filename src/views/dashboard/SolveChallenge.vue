@@ -70,50 +70,14 @@
             </h6>
           </div>
           <div class="card-body" v-if="!isLoadingData">
-            <div v-highlightjs>
-              <p class="challenge_description">
-                ✨ A variable is just a way to store information that can be
-                used or changed later by your program. Variables also provide a
-                way of labeling data with a descriptive name, so your program
-                can be understood more clearly by the others and yourself.
-              </p>
-              <br />
-              <p class="challenge_description">
-                📖 A variable can be defined as
-              </p>
-
-              <code>let da = 5;</code>
-              <br />
-              <p class="challenge_description">
-                📖 Instead of <b>let</b> you can use other statements, depending
-                on the behaviour you want from your program:
-              </p>
-              <ul class="challenge_description">
-                <li>
-                  <b>const</b> - the variable will not be able to be changed
-                  once it is declared
-                </li>
-                <li><b>var</b> - same behaviour as <b>let</b></li>
-              </ul>
-
-              <br />
-              <br />
-              <p class="challenge_description">
-                🔨 Now your task is to translate the following story
-              </p>
-              <p class="challenge_description">
-                You want to go to the supermarket to buy some food.
-                <span class="challenge_clue"
-                  >You need 50 pounds in your wallet to buy.</span
-                >
-              </p>
-              <p class="challenge_description">
-                ⚠️ When writing the code, use
-                <code style="display: inline">money</code> to determine the
-                amount of money you have in the wallet using
-                <b>what you have learnt so far</b>.
-              </p>
-            </div>
+            <div
+              v-highlightjs
+              v-html="
+                challengeDetails.challengeDetails
+                  ? challengeDetails.challengeDetails.challenge_text ?? ''
+                  : ''
+              "
+            ></div>
 
             <br />
             <br />
@@ -129,12 +93,20 @@
                     cursor: pointer;
                   "
                 >
-                  See Solution
+                  See Solution - 
                 </a>
-                : If you see the solution your progress<strong> will not be tracked.</strong>
+                 If you see the solution your progress<strong>
+                  will not be tracked.</strong
+                >
               </p>
-              <code v-show="showSol">
-                let money = 50
+              <code
+                v-show="showSol"
+                v-html="
+                  challengeDetails.challengeDetails
+                    ? challengeDetails.challengeDetails.challenge_solution ?? ''
+                    : ''
+                "
+              >
               </code>
             </div>
           </div>
@@ -244,7 +216,7 @@
 <script>
 import Terminal from "../../components/dashboard/challenge/Terminal.vue";
 import TestsStack from "../../components/dashboard/challenge/TestsStack.vue";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   data: () => {
@@ -278,6 +250,9 @@ export default {
     ...mapGetters({
       getUserSol: "challengeStore/getUserSolution",
       getCurrChapterDetails: "challengeStore/getCurrChapterDetails",
+    }),
+    ...mapMutations({
+      updateSolFlag: "challengeStore/SET_CURRENT_CHALLENGE_SOLUTION_SHOWN",
     }),
     async loadNextChallenge() {
       this.isLoadingData = true;
@@ -315,8 +290,9 @@ export default {
 
       this.isVerifyingSol = false;
     },
-    seeSolution(){
+    seeSolution() {
       this.showSol = !this.showSol;
+      this.updateSolFlag(true);
     },
     confetti() {
       let emitters = [];
