@@ -91,16 +91,6 @@ const challengeStore = {
         { root: true }
       );
 
-      console.log(
-        {
-          code: state.userSolution.answer_text,
-          chapter_code: state.currChallenge.chapter_id,
-          challenge_code: state.currChallenge.challenge_id,
-          solution_shown: state.currChallenge.solution_shown,
-          bindings: {}, //for now bindings is empty because we are still experiencing with this
-        },
-      );
-
       const response = await axios
         .post(
           API_URL + "challenge/evaluate",

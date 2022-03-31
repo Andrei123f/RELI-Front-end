@@ -180,13 +180,7 @@
             </h6>
           </div>
           <div class="card-body">
-            <Terminal
-              :code="
-                challengeDetails.challengeDetails
-                  ? challengeDetails.challengeDetails.user_answer ?? ''
-                  : ''
-              "
-            ></Terminal>
+            <Terminal :code="usercode"></Terminal>
           </div>
         </div>
       </div>
@@ -194,7 +188,9 @@
   </div>
   <div class="row">
     <TestsStack
-      v-if="passStack.length != 0 || errStack.length != 0"
+      v-if="
+        passStack && errStack && (passStack.length != 0 || errStack.length != 0)
+      "
       style="width: 50%"
       :title="'Tests Failed'"
       :colourTitle="'#ED6A5A'"
@@ -204,7 +200,9 @@
       :loading="isVerifyingSol"
     ></TestsStack>
     <TestsStack
-      v-if="passStack.length != 0 || errStack.length != 0"
+      v-if="
+        passStack && errStack && (passStack.length != 0 || errStack.length != 0)
+      "
       style="width: 50%"
       :title="'Tests Passed'"
       :colourTitle="'#00800d'"
@@ -224,6 +222,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data: () => {
     return {
+      usercode: "",
       showSol: false,
       chapterDetails: {},
       challengeDetails: {},
@@ -264,6 +263,9 @@ export default {
       this.errStack = data.challengeDetails.tests_failed ?? [];
       this.passStack = data.challengeDetails.tests_passed ?? [];
       this.showSol = data.challengeDetails.solution_shown ?? false;
+      this.usercode = this.challengeDetails.challengeDetails
+        ? this.challengeDetails.challengeDetails.user_answer ?? ""
+        : "";
       this.isLoadingData = false;
     },
     updateErrorSyntax(status, line, msg) {
@@ -283,7 +285,9 @@ export default {
       } else {
         this.emitter.emit("displayMessage", [
           "error",
-          `API submission failed: ${response.message}`,
+          `API submission failed: ${
+            response.message ? response.message : response.resReq.message ?? ""
+          }`,
         ]);
       }
       this.challengeDetails.challengeDetails.C = response.C;
@@ -325,6 +329,11 @@ export default {
         emitters: emitters,
         preset: "confetti",
       });
+    },
+  },
+  watch: {
+    usercode(newVal, oldVal) {
+      this.usercode = newVal;
     },
   },
   components: {
