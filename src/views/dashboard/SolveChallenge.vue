@@ -136,7 +136,7 @@
                 <a
                   v-if="
                     challengeDetails.challengeDetails &&
-                    challengeDetails.challengeDetails.C == 100
+                    challengeDetails.challengeDetails.C >= 80
                   "
                   @click="loadNextChallenge"
                   class="btn-primary"
