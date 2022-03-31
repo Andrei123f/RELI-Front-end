@@ -263,6 +263,7 @@ export default {
       this.chapterDetails = this.getCurrChapterDetails();
       this.errStack = data.challengeDetails.tests_failed ?? [];
       this.passStack = data.challengeDetails.tests_passed ?? [];
+      this.showSol = data.challengeDetails.solution_shown ?? false;
       this.isLoadingData = false;
     },
     updateErrorSyntax(status, line, msg) {
