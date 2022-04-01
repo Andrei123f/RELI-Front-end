@@ -43,7 +43,7 @@
                         challengeDetails.challengeDetails
                           ? challengeDetails.challengeDetails.C
                             ? +challengeDetails.challengeDetails.C.toFixed(2)
-                            : ""
+                            : "0"
                           : ""
                       }}%</a
                     >
@@ -53,7 +53,7 @@
                         challengeDetails.challengeDetails
                           ? challengeDetails.challengeDetails.p1
                             ? +challengeDetails.challengeDetails.p1.toFixed(2)
-                            : ""
+                            : "0"
                           : ""
                       }}%</a
                     >
@@ -63,7 +63,7 @@
                         challengeDetails.challengeDetails
                           ? challengeDetails.challengeDetails.p2
                             ? +challengeDetails.challengeDetails.p2.toFixed(2)
-                            : ""
+                            : "0"
                           : ""
                       }}%</a
                     >
@@ -73,15 +73,188 @@
             </h6>
           </div>
           <div class="card-body terminal" v-if="!isLoadingData">
-            <div
-              class="challenge_container"
-              v-highlightjs
-              v-html="
-                challengeDetails.challengeDetails
-                  ? challengeDetails.challengeDetails.challenge_text ?? ''
-                  : ''
-              "
-            ></div>
+            <div class="challenge_container" v-highlightjs>
+              <p class="challenge_description">
+                🏆 In this challenge you will use and strengthen what you have
+                learnt so far.
+              </p>
+              <br />
+              <p class="challenge_description">📖 A quick recap:</p>
+              <ul class="challenge_description">
+                <li>
+                  <b>Define a variable</b> : you can use <b>let</b>,
+                  <b>const</b> or <b>var</b> to define a variable
+                </li>
+                <br />
+                <li>
+                  <b>if</b> : the if statement structure is
+                  <code class="javascript">
+                    if(condition){ <br />
+                    &nbsp ...some action <br />
+                    }
+                  </code>
+                  Where:
+                  <ul class="challenge_description">
+                    <li>
+                      <b>condition</b> : is a variable that is either
+                      <b>true</b> or <b>false</b>
+                    </li>
+                    <li>
+                      <b>...some action</b> : is something that we'd like our
+                      program to do
+                    </li>
+                  </ul>
+                </li>
+                <br />
+                <li>
+                  <b>&&(and)</b> : a && b (a and b) - true when a is true and b
+                  is true, false otherwise
+                </li>
+                <li>
+                  <b>||(or)</b> : a || b (a or b) - true when either a is true
+                  and b is true, false when a is false and b is false
+                </li>
+              </ul>
+              <p class="challenge_description">
+                📖 Cheat sheet for the logical operators:
+              </p>
+              <table class="table challenge_description">
+                <thead>
+                  <tr>
+                    <th scope="col">Operator</th>
+                    <th scope="col">a</th>
+                    <th scope="col">b</th>
+                    <th scope="col">Evaluates to</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">&&(and)</th>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: green"><b>true</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">&&(and)</th>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: red"><b>false</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">&&(and)</th>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: red"><b>false</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">&&(and)</th>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: red"><b>false</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">||(or)</th>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: green"><b>true</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">||(or)</th>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: green"><b>true</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">||(or)</th>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: green"><b>true</b></td>
+                    <td style="color: green"><b>true</b></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">||(or)</th>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: red"><b>false</b></td>
+                    <td style="color: red"><b>false</b></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <br />
+              <p class="challenge_description">
+                🔨 Now your task is to translate the following story
+              </p>
+              <p class="challenge_description">
+                You are a car salesman. Everyday you talk to a lot of clients
+                and are making significant car sales. <br />
+                One day a troublesome customer comes and starts asking you a
+                couple of questions, which you need to answer because you are a
+                hard-working individual:
+
+                <br /><br />
+                - How many cars do you have in your dealership? <br />
+                - We have a total of
+                <span class="challenge_clue">25 cars</span> at the moment.
+                <br /><br />
+
+                - What happens if you sold all your sports cars? <br />
+                -
+                <span class="challenge_clue"
+                  >If the number of sports cars is 0</span
+                >
+                then
+                <span class="challenge_clue"
+                  >we need to talk to our supplier.</span
+                ><br /><br />
+
+                - What happens if
+                <span class="challenge_clue"
+                  >you sold all your sports cars</span
+                >
+                and you
+                <span class="challenge_clue"
+                  >have one customer that wants to buy one</span
+                >
+                ? <br />
+
+                - This is very unlikely, however, if this happens, then
+                <span class="challenge_clue"
+                  >we need to make a special contract</span
+                >
+                . <br /><br />
+
+                - What happens
+                <span class="challenge_clue"
+                  >if the current number of sports cars would be 100</span
+                >
+                and
+                <span class="challenge_clue"
+                  >no costumers that want to buy your sports cars</span
+                >
+                ? <br />
+                - Then probably
+                <span class="challenge_clue">we will go bankrupt</span> .
+                <br /><br />
+              </p>
+              <p class="challenge_description">
+                ⚠️ When writing the code, use
+                <code style="display: inline">currCarNumber</code> to determine
+                the amount of cars your dealership currently has,
+                <code style="display: inline">sportsCarNumber</code> to get the
+                number of sportscar you have,
+                <code style="display: inline">supplier</code> to talk to the
+                suppliers, <code style="display: inline">clientSports</code> to
+                get the amount of customers that want to buy sport cars,
+                <code style="display: inline">specialContract</code> to make a
+                special contract,
+                <code style="display: inline">bankRupt</code> to go bankrupt and
+                <b>what you have learnt so far</b>.
+              </p>
+              <p class="challenge_description">
+                💡Tip: You will need to declare
+                <code style="display: inline">currCarNumber</code> as a variable
+                and the rest of variables should not be declared.
+              </p>
+            </div>
 
             <br />
             <br />
@@ -105,12 +278,21 @@
               </p>
               <code
                 v-show="showSol"
-                v-html="
-                  challengeDetails.challengeDetails
-                    ? challengeDetails.challengeDetails.challenge_solution ?? ''
-                    : ''
-                "
               >
+              let currCarNumber = 25; <br><br>
+
+if (sportsCarNumber == 0) { <br>
+  &nbspif (clientSports == 1){ <br>
+    &nbsp&nbsp specialContract; <br>
+  &nbsp}else{ <br>
+    &nbsp&nbsp supplier; <br>
+  &nbsp}<br>
+}else{ <br>
+  &nbspif (sportsCarNumber == 100 && clientSports == 0){ <br>
+    &nbsp&nbsp bankRupt; <br>
+  &nbsp}<br>
+}
+
               </code>
             </div>
           </div>
