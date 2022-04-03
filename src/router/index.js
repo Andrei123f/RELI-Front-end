@@ -45,14 +45,26 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/auth/Login.vue"),
+    path: "/auth",
+    name: "Auth",
+    component: () => import("../views/layouts/Auth.vue"),
+    children: [
+      {
+        path: "login",
+        name: "Auth/login",
+        component: () => import("../views/auth/Login.vue"),
+      },
+      {
+        path: "register",
+        name: "Auth/register",
+        component: () => import("../views/auth/Register.vue"),
+      },
+    ],
   },
   {
-    path: "/register",
-    name: "Register",
-    component: () => import("../views/auth/Register.vue"),
+    path: "/:pathMatch(.*)*",
+    name: "404 not found page",
+    component: () => import("../views/layouts/404.vue"),
   },
 ];
 

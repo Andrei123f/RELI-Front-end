@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         //if the route requires auth, check if the user has logged in. If they have not, redirect to login, else, go with whatever they'd like to do
         if (! userLoggedIn) {
-            next({ name: 'Login' }).catch(err => {});
+            next({ name: 'Auth/login' }).catch(err => {});
         } else {
             next().catch(err => {});
         }
@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
                 if(userLoggedIn){
                     next({name: 'Dashboard'}).catch(err => {});
                 }else{
-                    next({ name: 'Login' }).catch(err => {}); //for the time being we redirect to login
+                    next({ name: 'Auth/login' }).catch(err => {}); //for the time being we redirect to login
                 }
             } else{
                 next().catch(err => {});
