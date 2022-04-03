@@ -15,6 +15,7 @@
     "js-cookie": "^3.0.1",
     "js-interpreter": "^2.3.1",
     "mitt": "^3.0.0",
+    "particles.vue3": "^1.42.4",
     "prismjs": "^1.27.0",
     "sass": "^1.49.11",
     "save": "^2.4.0",

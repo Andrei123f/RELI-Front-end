@@ -5,12 +5,14 @@ import mitt from 'mitt';
 import store from './store/index';
 import VueHighlightJS from "vue3-highlightjs";
 import "highlight.js/styles/monokai.css";
+import Particles from "particles.vue3";
 
 
 const emitter = mitt();
 const app = createApp(App);
 app.use(store);
 app.use(VueHighlightJS);
+app.use(Particles);
 
 router.beforeEach((to, from, next) => {
     let userLoggedIn = store.getters['authStore/getLoginStatus'];
