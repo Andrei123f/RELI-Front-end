@@ -98,7 +98,10 @@
           </div>
           <div class="text-center mt-5" style="color: white">
             Copyright &copy; 2021-2022 &mdash;
-            <a href="https://github.com/Andrei123f" target="”_blank”"
+            <a
+              href="https://github.com/Andrei123f"
+              style="color: white; text-decoration: none"
+              target="”_blank”"
               >Andrei123f <i class="fa fa-github"></i
             ></a>
           </div>
