@@ -16,6 +16,7 @@
     "js-interpreter": "^2.3.1",
     "mitt": "^3.0.0",
     "prismjs": "^1.27.0",
+    "sass": "^1.49.11",
     "save": "^2.4.0",
     "secure-ls": "^1.2.6",
     "source-map-loader": "^1.0.0",
