@@ -85,7 +85,7 @@ export default {
 /* ---- reset ---- */
 body {
   margin: 0;
-  font: normal 75% Arial, Helvetica, sans-serif;
+  font: normal 75%;
 }
 canvas {
   display: block;
