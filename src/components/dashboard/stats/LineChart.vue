@@ -24,7 +24,7 @@ export default {
           label: "P1",
           data: p1_data,
           fill: false,
-          borderColor: "#4bc0c0",
+          borderColor: "#ffce0d",
         },
         {
           label: "P2",

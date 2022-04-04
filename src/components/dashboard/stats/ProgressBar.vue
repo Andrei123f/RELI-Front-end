@@ -131,7 +131,7 @@ export default {
 }
 
 .bubble:before {
-  content: "x";
+  content: "\2715";
   position: absolute;
   top: 2px;
   left: calc(50% - 15px);
