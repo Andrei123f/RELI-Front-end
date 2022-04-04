@@ -65,6 +65,9 @@ export default {
     }),
   },
   methods: {
+    ...mapMutations({
+      resetAuthState: "authStore/RESET_AUTH_STATE",
+    }),
     resetMessages() {
       this.showInfo = false;
       this.showSuccess = false;
@@ -85,7 +88,8 @@ export default {
         case "error":
           this.showInfo = true;
           this.msg = "Unable to refresh access token. Please log back in.";
-          this.$router.push({ path: "/login" });
+          this.resetAuthState();
+          this.$router.push({ path: "/auth/login" });
           break;
       }
     },
@@ -160,7 +164,7 @@ export default {
   margin-bottom: 0px;
 }
 #nprogress .bar {
-  background: #29BF12 !important;
-  height:5px;
+  background: #29bf12 !important;
+  height: 5px;
 }
 </style>

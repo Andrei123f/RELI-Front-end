@@ -26,6 +26,13 @@ const authStore = {
     SET_REFRESH_ACCESS_TOKEN_STATUS: (state, s) => {
       state.refreshAccessTokenStatus = s;
     },
+    RESET_AUTH_STATE(state) {
+      state.isLoggedIn = false;
+      state.refresh_token = null;
+      state.access_token = null;
+      state.userDetails = null;
+      state.refreshAccessTokenStatus = null;
+    },
   },
   actions: {
     async signIn({ dispatch }, payload) {
