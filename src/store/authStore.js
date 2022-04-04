@@ -38,6 +38,7 @@ const authStore = {
       state.access_token = null;
       state.userDetails = null;
       state.refreshAccessTokenStatus = null;
+      state.refresh_token_at = null;
     },
   },
   actions: {
@@ -96,7 +97,7 @@ const authStore = {
     async getValidAccessToken({ dispatch, state }) {
       const curr_access_token = state.access_token;
       const timeNow = Date.now();
-      if (timeNow < state.refresh_token_at) {
+      if (state.refresh_token_at && timeNow < state.refresh_token_at) {
         return curr_access_token;
       }
 

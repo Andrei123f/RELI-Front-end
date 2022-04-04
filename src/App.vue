@@ -58,6 +58,9 @@ export default {
       }
       this.resetMessages();
     });
+    this.emitter.on("logoutUser", () => {
+      this.logoutUser();
+    });
   },
   computed: {
     ...mapGetters({
@@ -67,6 +70,8 @@ export default {
   methods: {
     ...mapMutations({
       resetAuthState: "authStore/RESET_AUTH_STATE",
+      resetChallengeState: "challengeStore/RESET_CHALLENGE_STATE",
+      resetDashboardState: "dashboardStore/RESET_DASHBOARD_STATE",
     }),
     resetMessages() {
       this.showInfo = false;
@@ -88,10 +93,15 @@ export default {
         case "error":
           this.showInfo = true;
           this.msg = "Unable to refresh access token. Please log back in.";
-          this.resetAuthState();
-          this.$router.push({ path: "/auth/login" });
+          this.logoutUser();
           break;
       }
+    },
+    logoutUser() {
+      this.resetAuthState();
+      this.resetChallengeState();
+      this.resetDashboardState();
+      this.$router.push({ path: "/auth/login" });
     },
   },
   watch: {

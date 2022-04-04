@@ -10,13 +10,6 @@
       shadow
     "
   >
-    <!-- Sidebar Toggle (Topbar) -->
-    <button
-      id="sidebarToggleTop"
-      class="btn btn-link d-md-none rounded-circle mr-3"
-    >
-      <i class="fa fa-bars"></i>
-    </button>
     <!-- Topbar Navbar -->
     <ul class="navbar-nav ml-auto">
       <!-- Nav Item - User Information -->
@@ -53,7 +46,7 @@
             @click="doLogout"
             data-toggle="modal"
             data-target="#logoutModal"
-            style="cursor: pointer;"
+            style="cursor: pointer"
           >
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
             Logout
@@ -67,7 +60,6 @@
 import NotificationsVue from "./Notifications.vue";
 import MessagesVue from "./Messages.vue";
 import Notifications from "./Notifications.vue";
-import { mapMutations } from "vuex";
 export default {
   data: () => {
     return {
@@ -78,12 +70,8 @@ export default {
     this.userData = this.$store.getters["authStore/getUserDetails"];
   },
   methods: {
-    ...mapMutations({
-      resetAuthState: "authStore/RESET_AUTH_STATE",
-    }),
     doLogout() {
-      this.resetAuthState();
-      this.$router.push({ path: "/auth/login" });
+      this.emitter.emit("logoutUser");
     },
   },
   components: { NotificationsVue, MessagesVue, Notifications },

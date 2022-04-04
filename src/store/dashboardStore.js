@@ -16,6 +16,10 @@ const dashboardStore = {
     SET_CHAPTER_STATS(state, stats) {
       state.chapterStats = stats;
     },
+    RESET_DASHBOARD_STATE(state) {
+      state.chapterStats = [];
+      state.updateChapterStats = true;
+    },
   },
   actions: {
     async fetchDashboardData({ dispatch, commit }) {

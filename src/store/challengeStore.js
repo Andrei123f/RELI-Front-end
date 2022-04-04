@@ -48,6 +48,29 @@ const challengeStore = {
     SET_UPDATE_CURRENT_CHALLENGE_FLAG(state, flag) {
       state.update_current_challenge = flag;
     },
+    RESET_CHALLENGE_STATE(state) {
+      state.currChallenge = {
+        challenge_id: 0,
+        chapter_id: 0,
+        challengeDetails: {},
+        solution_shown: false,
+      };
+
+      state.currChapter = {
+        perc_done: 0,
+        chapter_name: "",
+        chapter_description: "",
+        chapter_id: "",
+      };
+
+      (state.userSolution = {
+        answer_text: "",
+        p1: 0,
+        p2: 0,
+        C: 0,
+      }),
+        (state.update_current_challenge = true);
+    },
   },
   actions: {
     async fetchNextChallenge({ dispatch, commit }) {
