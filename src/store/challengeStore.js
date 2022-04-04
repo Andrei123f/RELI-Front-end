@@ -48,6 +48,17 @@ const challengeStore = {
     SET_UPDATE_CURRENT_CHALLENGE_FLAG(state, flag) {
       state.update_current_challenge = flag;
     },
+    SET_TESTS_FAILED(state, t) {
+      state.currChallenge.challengeDetails.tests_failed = t;
+    },
+    SET_TESTS_PASSED(state, t) {
+      state.currChallenge.challengeDetails.tests_passed = t;
+    },
+    SET_USER_SOLUTION_STATS(state, p1, p2, C) {
+      state.currChallenge.challengeDetails.p1 = p1;
+      state.currChallenge.challengeDetails.p2 = p2;
+      state.currChallenge.challengeDetails.C = C;
+    },
     RESET_CHALLENGE_STATE(state) {
       state.currChallenge = {
         challenge_id: 0,
@@ -145,6 +156,14 @@ const challengeStore = {
         commit("dashboardStore/SET_UPDATE_CHAPTER_STATS_FLAG", true, {
           root: true,
         });
+        commit("SET_TESTS_PASSED", response.data.testPassedStack);
+        commit("SET_TESTS_FAILED", response.data.testFailedStack);
+        commit(
+          "SET_USER_SOLUTION_STATS",
+          response.data.p1,
+          response.data.p2,
+          response.data.C
+        );
       }
 
       return response.data;
