@@ -172,6 +172,7 @@ export default {
 }
 #divMsg {
   margin-bottom: 0px;
+  z-index: 10
 }
 #nprogress .bar {
   background: #29bf12 !important;
