@@ -34,10 +34,9 @@
       v-bind:class="{ active: this.$route.name == 'Dashboard/stats' }"
     >
       <router-link class="nav-link" to="/dashboard">
-        <i class="fa fa-chart-bar fa-5x"></i><span>Dashboard</span>
+        <i class="fa fa-chart-bar"></i><span>Dashboard</span>
       </router-link>
     </li>
-
 
     <!-- Nav Item - Challenge solver -->
     <li
@@ -66,7 +65,6 @@
       </a>
     </li>
     -->
-
 
     <!-- Nav Item - Challenge solver -->
     <li
