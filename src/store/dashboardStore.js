@@ -37,16 +37,16 @@ const dashboardStore = {
 
       if (response.status == 200 && response.data.result == "SUCCESS") {
         commit("SET_CHAPTER_STATS", response.data.chaptersData.chapters);
+        commit("SET_UPDATE_CHAPTER_STATS_FLAG", false);
       } else {
         console.log("Something went wrong and could not fetch chapters stats.");
       }
     },
 
     async getDashboardData({ dispatch, commit, state }) {
-      if (true) {
-        //todo decide how to handle caching the results so no unnecessary requests are made...
+      //we need to load new data only when we complete a new challenge
+      if (state.updateChapterStats) {
         await dispatch("fetchDashboardData");
-        commit("SET_UPDATE_CHAPTER_STATS_FLAG", false);
       }
 
       return state.chapterStats;

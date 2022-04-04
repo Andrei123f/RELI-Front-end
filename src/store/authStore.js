@@ -11,6 +11,7 @@ const authStore = {
     access_token: null,
     userDetails: null,
     refreshAccessTokenStatus: null,
+    refresh_token_at: null,
   },
   mutations: {
     SET_TOKENS: (state, { access_token, refresh_token }) => {
@@ -25,6 +26,11 @@ const authStore = {
     },
     SET_REFRESH_ACCESS_TOKEN_STATUS: (state, s) => {
       state.refreshAccessTokenStatus = s;
+    },
+    SET_NEW_REFRESH_ACCESS_TOKEN_TIME: (state) => {
+      let currTime = Date.now();
+      let refreshTime = currTime + 55 * 60 * 1000; //set the refresh access token to 55 minutes from now
+      state.refresh_token_at = refreshTime;
     },
     RESET_AUTH_STATE(state) {
       state.isLoggedIn = false;
@@ -74,6 +80,7 @@ const authStore = {
           });
         if (response.status == 200 && response.data.result == "SUCCESS") {
           commit("SET_REFRESH_ACCESS_TOKEN_STATUS", "success");
+          commit("SET_NEW_REFRESH_ACCESS_TOKEN_TIME");
           const access_token = response.data.access_token;
           dispatch("attempt", { access_token, refresh_token, userDetails });
         } else {
@@ -87,8 +94,12 @@ const authStore = {
       }
     },
     async getValidAccessToken({ dispatch, state }) {
-      //TODO : maybe store the cookie in the cookie so that subsequent request do not busy the API.
       const curr_access_token = state.access_token;
+      const timeNow = Date.now();
+      if (timeNow < state.refresh_token_at) {
+        return curr_access_token;
+      }
+
       let rtrn = null;
       const response = await axios
         .post(

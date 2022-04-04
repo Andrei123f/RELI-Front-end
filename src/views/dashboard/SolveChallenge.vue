@@ -252,13 +252,18 @@ export default {
     ...mapGetters({
       getUserSol: "challengeStore/getUserSolution",
       getCurrChapterDetails: "challengeStore/getCurrChapterDetails",
+      getCurrentUpdateFlag: "challengeStore/geUpdateCurrentChallengeFlag",
+      getCurrentChallenge: "challengeStore/getCurrentChallenge",
     }),
     ...mapMutations({
       updateSolFlag: "challengeStore/SET_CURRENT_CHALLENGE_SOLUTION_SHOWN",
+      updateNextChallengeFlag:
+        "challengeStore/SET_UPDATE_CURRENT_CHALLENGE_FLAG",
     }),
     async loadNextChallenge() {
+      const updateFlag = this.getCurrentUpdateFlag();
       this.isLoadingData = true;
-      const data = (this.challengeDetails = await this.getNextChallenge());
+      const data = (this.challengeDetails = updateFlag ? await this.getNextChallenge() : this.getCurrentChallenge());
       this.chapterDetails = this.getCurrChapterDetails();
       this.errStack = data.challengeDetails.tests_failed ?? [];
       this.passStack = data.challengeDetails.tests_passed ?? [];
@@ -267,6 +272,7 @@ export default {
         ? this.challengeDetails.challengeDetails.user_answer ?? ""
         : "";
       this.isLoadingData = false;
+      this.updateNextChallengeFlag(false);
     },
     updateErrorSyntax(status, line, msg) {
       this.codeSyntaxError.status = status;
@@ -281,8 +287,10 @@ export default {
           "success",
           `API submission succeded: ${response.message}`,
         ]);
+        this.updateNextChallengeFlag(true);
         this.confetti();
       } else {
+        this.updateNextChallengeFlag(false);
         this.emitter.emit("displayMessage", [
           "error",
           `API submission failed: ${

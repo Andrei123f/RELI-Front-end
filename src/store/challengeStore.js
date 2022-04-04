@@ -24,6 +24,7 @@ const challengeStore = {
       p2: 0,
       C: 0,
     },
+    update_current_challenge: true,
   },
   mutations: {
     SET_CURRENT_CHALLENGE_DETAILS(state, challenge) {
@@ -43,6 +44,9 @@ const challengeStore = {
     },
     SET_USER_ANSWER_TEXT(state, user_answer) {
       state.userSolution.answer_text = user_answer;
+    },
+    SET_UPDATE_CURRENT_CHALLENGE_FLAG(state, flag) {
+      state.update_current_challenge = flag;
     },
   },
   actions: {
@@ -79,12 +83,12 @@ const challengeStore = {
 
     async getNextChallenge({ dispatch, state }) {
       //todo decide how to store the current challenge details in the cache or smth
-      if (true) {
+      if (state.update_current_challenge) {
         await dispatch("fetchNextChallenge");
       }
       return state.currChallenge;
     },
-    async submitUserAnswer({ dispatch, state }) {
+    async submitUserAnswer({ dispatch, state, commit }) {
       const accessToken = await dispatch(
         "authStore/getValidAccessToken",
         {},
@@ -113,6 +117,13 @@ const challengeStore = {
           );
           console.log(err);
         });
+      if (response && response.status == 200) {
+        //we need to load again the dashboard data
+        commit("dashboardStore/SET_UPDATE_CHAPTER_STATS_FLAG", true, {
+          root: true,
+        });
+      }
+
       return response.data;
     },
   },
@@ -124,6 +135,7 @@ const challengeStore = {
       state.currChallenge.challengeDetails,
     getUserSolution: (state) => state.userSolution.answer_text,
     getCurrChapterDetails: (state) => state.currChapter,
+    geUpdateCurrentChallengeFlag: (state) => state.update_current_challenge,
   },
 };
 export default challengeStore;
