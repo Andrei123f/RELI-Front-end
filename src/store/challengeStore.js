@@ -122,6 +122,38 @@ const challengeStore = {
       }
       return state.currChallenge;
     },
+    async getSpecificChallenge({ dispatch, state, commit }, payload) {
+      //todo decide how to store the current challenge details in the cache or smth
+      const accessToken = await dispatch(
+        "authStore/getValidAccessToken",
+        {},
+        { root: true }
+      );
+      const response = await axios
+        .post(API_URL + "challenge/getChallengeById", payload, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .catch((err) => {
+          console.log("Something went wrong with the getDashboardData method");
+          console.log(err);
+        });
+      
+      if (response.status == 200 && response.data.result == "SUCCESS") {
+        commit("SET_CURRENT_CHALLENGE_DETAILS", response.data.challengeDetails);
+        commit("SET_CURRENT_CHALLENGE_ID", response.data.challenge_id);
+        commit("SET_CURRENT_CHALLENGE_chapter_id", response.data.chapter_id);
+        commit("SET_CURRENT_CHAPTER_DETAILS", response.data.chapterDetails);
+        commit(
+          "SET_CURRENT_CHALLENGE_SOLUTION_SHOWN",
+          response.data.challengeDetails.solution_shown
+        );
+      } else {
+        console.log("Something went wrong and could not fetch chapters stats.");
+      }
+      return state.currChallenge;
+    },
     async submitUserAnswer({ dispatch, state, commit }) {
       const accessToken = await dispatch(
         "authStore/getValidAccessToken",

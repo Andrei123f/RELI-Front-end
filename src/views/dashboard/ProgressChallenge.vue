@@ -25,6 +25,7 @@
         </div>
         <div class="card-body" v-if="!isLoadingData">
           <ProgressBarVue
+            :hasRouterLinks="true"
             :checkpoints="chapter.challenges"
             :uniqueKey="chapter.chapter_id"
           ></ProgressBarVue>
@@ -78,6 +79,13 @@ export default {
             title: challenge.challenge_name,
             description: "",
             completed: challenge.completed,
+            redirectConf: {
+              toName: "Challenge/solve",
+              passData: {
+                chapter_id: parseInt(chapterId) + 1,
+                challenge_id: parseInt(challengeId) + 1,
+              },
+            },
           });
         }
         this.formattedChallengesData.push({

@@ -12,7 +12,29 @@
       "
     ></div>
   </div>
-  <ul class="progress_bar">
+  <ul class="progress_bar" v-if="hasRouterLinks">
+    <li
+      v-for="(o, index) in checkpoints"
+      @click="redirectTo(o)"
+      style="cursor: pointer"
+      v-bind:key="index"
+      class="bubble"
+      v-bind:id="'bubble_' + index + (uniqueKey ? '_' + uniqueKey : '')"
+      v-bind:style="
+        'width:' +
+        widthOfStage +
+        '%; transition: ' +
+        500 * index +
+        'ms linear 0s'
+      "
+    >
+      <span style="width: 10px; height: 20px"
+        >{{ o.title }} <br />
+        {{ o.description }}
+      </span>
+    </li>
+  </ul>
+  <ul class="progress_bar" v-if="!hasRouterLinks">
     <li
       v-for="(o, index) in checkpoints"
       v-bind:key="index"
@@ -46,6 +68,11 @@ export default {
       type: String,
       default: "",
     },
+    hasRouterLinks: {
+      name: "Flag for checking if the checkpoints also include links config data.",
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => {
     return {
@@ -67,7 +94,6 @@ export default {
       this.completedNodesN = this.checkpoints.filter(
         (el) => el.completed
       ).length;
-      console.log(this.checkpoints);
       for (let i = 1; i < this.checkpoints.length; i++) {
         if (!this.checkpoints[i].completed) continue;
         setTimeout(
@@ -100,6 +126,16 @@ export default {
         } else {
           animationDelay = this.animationalDelayForBubble * i;
         }
+      }
+    },
+    redirectTo(bubble) {
+      if (bubble.redirectConf) {
+        const toName = bubble.redirectConf.toName;
+        const data = bubble.redirectConf.passData;
+        this.$router.push({
+          name: toName,
+          params: { specificChallenge: JSON.stringify(data) },
+        });
       }
     },
   },

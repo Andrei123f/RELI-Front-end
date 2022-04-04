@@ -28,6 +28,7 @@ const routes = [
     path: "/challenge",
     name: "Challenge",
     component: () => import("../views/layouts/Dashboard.vue"),
+    props: true,
     meta: {
       requiresAuth: true,
     },
@@ -35,6 +36,7 @@ const routes = [
       {
         path: "solve",
         name: "Challenge/solve",
+        props: true,
         component: () => import("../views/dashboard/SolveChallenge.vue"),
       },
       {

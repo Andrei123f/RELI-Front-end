@@ -222,6 +222,7 @@ import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   data: () => {
     return {
+      specificDetailsChallenge: {},
       usercode: "",
       showSol: false,
       chapterDetails: {},
@@ -237,9 +238,17 @@ export default {
       passStack: [],
     };
   },
+  props: ["specificChallenge"],
   setup() {},
   mounted() {
-    this.loadNextChallenge();
+    if (this.specificChallenge) {
+      this.specificDetailsChallenge = JSON.parse(
+        this.specificChallenge ?? "{}"
+      );
+      this.loadSpecificChallenge();
+    } else {
+      this.loadNextChallenge();
+    }
     this.emitter.on("codeSyntaxError", (data) => {
       this.updateErrorSyntax(data.status, data.error_line, data.error_text);
     });
@@ -248,6 +257,7 @@ export default {
     ...mapActions({
       getNextChallenge: "challengeStore/getNextChallenge",
       submitUserAnswer: "challengeStore/submitUserAnswer",
+      getSpecificChallenge: "challengeStore/getSpecificChallenge",
     }),
     ...mapGetters({
       getUserSol: "challengeStore/getUserSolution",
@@ -263,7 +273,46 @@ export default {
     async loadNextChallenge() {
       const updateFlag = this.getCurrentUpdateFlag();
       this.isLoadingData = true;
-      const data = (this.challengeDetails = updateFlag ? await this.getNextChallenge() : this.getCurrentChallenge());
+      const data = (this.challengeDetails = updateFlag
+        ? await this.getNextChallenge()
+        : this.getCurrentChallenge());
+      this.chapterDetails = this.getCurrChapterDetails();
+      this.errStack = data.challengeDetails.tests_failed ?? [];
+      this.passStack = data.challengeDetails.tests_passed ?? [];
+      this.showSol = data.challengeDetails.solution_shown ?? false;
+      this.usercode = this.challengeDetails.challengeDetails
+        ? this.challengeDetails.challengeDetails.user_answer ?? ""
+        : "";
+      this.isLoadingData = false;
+      this.updateNextChallengeFlag(false);
+    },
+    async loadSpecificChallenge() {
+      let dataCurrent = this.getCurrentChallenge();
+      const updateFlag = this.getCurrentUpdateFlag();
+      let getSpecific = false;
+      console.log(dataCurrent.chapter_id);
+      console.log(this.specificDetailsChallenge.chapter_id);
+      console.log(dataCurrent.challenge_id);
+      console.log(this.specificDetailsChallenge.challenge_id);
+      if (
+        dataCurrent.chapter_id != this.specificDetailsChallenge.chapter_id ||
+        dataCurrent.challenge_id !=
+          this.specificDetailsChallenge.challenge_id ||
+        updateFlag
+      ) {
+        getSpecific = true;
+      }
+
+      this.isLoadingData = true;
+      console.log(this.specificDetailsChallenge);
+      const data = (this.challengeDetails = getSpecific
+        ? await this.getSpecificChallenge({
+            chapter_code: parseInt(this.specificDetailsChallenge.chapter_id),
+            challenge_code: parseInt(
+              this.specificDetailsChallenge.challenge_id
+            ),
+          })
+        : this.getCurrentChallenge());
       this.chapterDetails = this.getCurrChapterDetails();
       this.errStack = data.challengeDetails.tests_failed ?? [];
       this.passStack = data.challengeDetails.tests_passed ?? [];
