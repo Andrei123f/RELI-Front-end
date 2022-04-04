@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import SuccessNotification from "./components/notifications/SuccessNotification.vue";
 import InfoNotfication from "./components/notifications/InfoNotfication.vue";
 import DangerNotification from "./components/notifications/DangerNotification.vue";
