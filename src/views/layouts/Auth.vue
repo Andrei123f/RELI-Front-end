@@ -1,4 +1,5 @@
 <template>
+  <router-view></router-view>
   <Particles
     id="tsparticles_links"
     :particlesInit="particlesInit"
@@ -64,7 +65,7 @@
           speed: 2,
           straight: false,
         },
-        number: { density: { enable: true, value_area: 800 }, value: 80 },
+        number: { density: { enable: true, value_area: 400 }, value: 40 },
         opacity: {
           anim: { enable: false, opacity_min: 0.1, speed: 1, sync: false },
           random: false,
@@ -98,7 +99,6 @@
       detectRetina: true,
     }"
   />
-  <router-view></router-view>
 </template>
 
 <script>
@@ -117,6 +117,7 @@ canvas {
 }
 /* ---- tsparticles container ---- */
 #tsparticles_links {
+  z-index: -100;
   position: absolute;
   width: 100%;
   height: 100%;
