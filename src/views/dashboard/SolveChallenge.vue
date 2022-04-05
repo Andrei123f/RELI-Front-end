@@ -138,7 +138,7 @@
                     challengeDetails.challengeDetails &&
                     challengeDetails.challengeDetails.C >= 80
                   "
-                  @click="loadNextChallenge"
+                  @click="loadNextChallenge(true)"
                   class="btn-primary"
                   style="
                     float: right;
@@ -247,7 +247,7 @@ export default {
       );
       this.loadSpecificChallenge();
     } else {
-      this.loadNextChallenge();
+      this.loadNextChallenge(false);
     }
     this.emitter.on("codeSyntaxError", (data) => {
       this.updateErrorSyntax(data.status, data.error_line, data.error_text);
@@ -270,7 +270,10 @@ export default {
       updateNextChallengeFlag:
         "challengeStore/SET_UPDATE_CURRENT_CHALLENGE_FLAG",
     }),
-    async loadNextChallenge() {
+    async loadNextChallenge(userAction) {
+      if (userAction) {
+        this.updateNextChallengeFlag(true);
+      }
       const updateFlag = this.getCurrentUpdateFlag();
       this.isLoadingData = true;
       const data = (this.challengeDetails = updateFlag
