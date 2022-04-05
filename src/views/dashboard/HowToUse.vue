@@ -17,7 +17,9 @@
             platform that aims to help people with different backgrounds to
             develop an algorithmic thinking mind using the action of
             translating/rendering a word problem (story).
-            <b class="text-primary">RELI</b> is also my Thesis project.
+            <b class="text-primary">RELI</b> currently supports the
+            <b>JavaScript</b> programming language.
+            <b class="text-primary">RELI</b> is also my thesis project.
           </div>
         </div>
       </div>
