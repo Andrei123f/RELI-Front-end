@@ -58,10 +58,12 @@
   <br />
   <br />
 
-  <div class="card-header" style="text-align: center" v-if="!isLoadingData">
+  <div class="header" style="text-align: center" v-if="!isLoadingData">
     <h6 class="m-0 font-weight-bold text-primary">
       <span>{{
-        `Next goal: Complete ${nextChallenge.chapter} to become a ${nextChallenge.status} !`
+        `Complete ${nextChallenge.chapter} to become ${
+          nextChallenge.status == "Amateur" ? "an" : "a"
+        } ${nextChallenge.status} !`
       }}</span>
     </h6>
   </div>
