@@ -62,6 +62,21 @@ const routes = [
     ],
   },
   {
+    path: "/howtouse",
+    name: "How",
+    component: () => import("../views/layouts/Dashboard.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
+      {
+        path: "",
+        name: "How to use RenderLingo",
+        component: () => import("../views/dashboard/HowToUse.vue"),
+      },
+    ],
+  },
+  {
     path: "/auth",
     name: "Auth",
     component: () => import("../views/layouts/Auth.vue"),

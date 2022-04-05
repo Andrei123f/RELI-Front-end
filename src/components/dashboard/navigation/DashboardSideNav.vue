@@ -42,7 +42,7 @@
     <li
       class="nav-item"
       v-bind:class="{
-        active: this.$route.name == 'Dashboard/challenge/progress',
+        active: this.$route.name == 'Challenge/progress',
       }"
     >
       <router-link class="nav-link" to="/challenge/progress">
@@ -69,11 +69,24 @@
     <!-- Nav Item - Challenge solver -->
     <li
       class="nav-item"
-      v-bind:class="{ active: this.$route.name == 'Dashboard/challenge/solve' }"
+      v-bind:class="{ active: this.$route.name == 'Challenge/solve' }"
     >
       <router-link class="nav-link" to="/challenge/solve">
         <i class="fas fa-book-reader"></i>
         <span>Solve a new challenge</span>
+      </router-link>
+    </li>
+
+    <!-- Nav Item - Challenge solver -->
+    <li
+      class="nav-item"
+      v-bind:class="{
+        active: this.$route.name == 'How to use RenderLingo',
+      }"
+    >
+      <router-link class="nav-link" to="/howtouse">
+        <i class="fa fa-info-circle"></i>
+        <span>About RenderLingo</span>
       </router-link>
     </li>
 

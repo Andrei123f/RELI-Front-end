@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
       <h1 class="h3 mb-0 text-gray-800">
-        Challenges roadmap<span style="font-size: 23px">🧭</span>
+        Challenges roadmap<span style="font-size: 23px"> 🧭</span>
       </h1>
     </div>
     <i v-if="isLoadingData" class="fas fa-spinner fa-pulse"></i>
@@ -32,7 +32,6 @@
         </div>
       </div>
     </div>
-    <div class="row"></div>
   </div>
 </template>
 
