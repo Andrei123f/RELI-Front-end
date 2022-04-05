@@ -47,6 +47,21 @@ const routes = [
     ],
   },
   {
+    path: "/user",
+    name: "User",
+    component: () => import("../views/layouts/Dashboard.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+    children: [
+      {
+        path: "",
+        name: "User/Profile",
+        component: () => import("../views/dashboard/UserProfile.vue"),
+      },
+    ],
+  },
+  {
     path: "/auth",
     name: "Auth",
     component: () => import("../views/layouts/Auth.vue"),

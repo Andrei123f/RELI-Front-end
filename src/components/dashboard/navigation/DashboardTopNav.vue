@@ -24,7 +24,7 @@
           aria-expanded="false"
         >
           <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-            `${userData.firstname} ${userData.surname}`
+            `Hi, ${userData.firstname} ${userData.surname}!`
           }}</span>
           <img
             class="img-profile rounded-circle"
@@ -36,10 +36,13 @@
           class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
           aria-labelledby="userDropdown"
         >
-          <a class="dropdown-item" href="#">
-            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
-          </a>
+          <router-link to="/user" style="text-decoration: none">
+            <span class="dropdown-item" style="cursor: pointer">
+              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+              Profile
+            </span>
+          </router-link>
+
           <div class="dropdown-divider"></div>
           <a
             class="dropdown-item"
