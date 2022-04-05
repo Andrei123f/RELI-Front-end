@@ -152,7 +152,7 @@ export default {
           } else {
             if (challenge.C == 0) {
               this.formattedDoughnutChart.challenges_untried++;
-            } else if (challenge.c >= 80) {
+            } else if (challenge.C >= 80) {
               this.formattedDoughnutChart.challenges_complete++;
             } else if (challenge.solution_shown) {
               this.formattedDoughnutChart.challenges_sol_shown++;
