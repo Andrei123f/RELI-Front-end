@@ -6,13 +6,11 @@
           <div class="profile">
             <div class="avatar">
               <img
-                src="../../../../public/default_profile_picture.png"
+                src="/user_profile_picture.png"
                 width="300"
                 height="300"
                 alt="Circle Image"
                 class="img-raised rounded-circle img-fluid"
-                style="cursor: pointer"
-                @click="changeProfilePicture()"
               />
             </div>
             <br />
@@ -38,9 +36,7 @@
               <div v-for="(o, index) in unlocked_badges" v-bind:key="index">
                 <div>
                   <figure>
-                    <img
-                      v-bind:src="'../../../../public/badges/' + o.img + '.png'"
-                    />
+                    <img v-bind:src="'/badges/' + o.img + '.png'" />
                     <figcaption>{{ o.description }}</figcaption>
                   </figure>
                 </div>
@@ -48,9 +44,7 @@
               <div v-for="(o, index) in locked_badges" v-bind:key="index">
                 <div>
                   <figure>
-                    <img
-                      v-bind:src="'../../../../public/badges/' + o.img + '.png'"
-                    />
+                    <img v-bind:src="'/badges/' + o.img + '.png'" />
                     <figcaption>{{ o.description }}</figcaption>
                   </figure>
                 </div>
@@ -197,48 +191,64 @@ export default {
       }
       this.formattedChaptersData.push({
         title: "Learner",
+        /*
         description: `${
           chapter1Done ? "" : "Complete chapter 1 to become a Learner!"
         }`,
+        */
+        description: "",
         completed: chapter1Done,
       });
 
       this.formattedChaptersData.push({
         title: "Novice",
+        /*
         description: `${
           chapter2Done ? "" : "Complete chapter 2 to become a Novice!"
         }`,
+        */
+        description: "",
+
         completed: chapter2Done,
       });
 
       this.formattedChaptersData.push({
         title: "Amateur",
+        /*
         description: `${
           chapter3Done ? "" : "Complete chapter 3 to become a Amateur!"
         }`,
+        */
+        description: "",
+
         completed: chapter3Done,
       });
 
       this.formattedChaptersData.push({
         title: "Enthusiast",
+        /*
         description: `${
           chapter4Done ? "" : "Complete chapter 4 to become a Enthusiast!"
         }`,
+        */
+        description: "",
+
         completed: chapter4Done,
       });
 
       this.formattedChaptersData.push({
         title: "Pro",
+        /*
         description: `${
           chapter1Done && chapter2Done && chapter3Done && chapter4Done
             ? ""
             : "Complete all chapters to become a Pro!"
         }`,
+        */
+        description: "",
+
         completed: chapter1Done && chapter2Done && chapter3Done && chapter4Done,
       });
-    },
-    changeProfilePicture() {
-      console.log("change profile picture");
     },
   },
 };

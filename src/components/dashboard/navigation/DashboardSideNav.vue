@@ -9,7 +9,7 @@
     <a class="sidebar-brand d-flex align-items-center justify-content-center">
       <router-link to="/dashboard">
         <div class="sidebar-brand-icon">
-          <img src="../../../../public/cosmin_try.png" width="65" height="65" />
+          <img src="/cosmin_try.png" width="65" height="65" />
         </div>
       </router-link>
       <router-link

@@ -23,12 +23,13 @@
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{
-            `Hi, ${userData.firstname} ${userData.surname}!`
-          }}</span>
+          <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+            ><b>{{ `Hi, ${userData.firstname} ${userData.surname}!` }}</b></span
+          >
           <img
-            class="img-profile rounded-circle"
-            src="../../../../public/cosmin_try.png"
+            width="20"
+            height="20"
+            src="/top_nav_profile_picture.png"
           />
         </a>
         <!-- Dropdown - User Information -->
