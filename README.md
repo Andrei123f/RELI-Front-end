@@ -58,7 +58,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-RenderLingo (in short RELI) is a protoype online learning platform build with the Vue ecosystem that aims to help people with different backgrounds to develop an algorithmic thinking mind using the action of translating/rendering a word problem (story). RELI currently supports the JavaScript programming language. RELI is also my thesis project.
+RenderLingo (in short RELI) is a protoype online learning platform build with the <img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vue ecosystem that aims to help people with different backgrounds to develop an algorithmic thinking mind using the action of translating/rendering a word problem (story). RELI currently supports the JavaScript programming language. RELI is also my thesis project.
 
 Why should you use RELI?<br />
 Here's why:
