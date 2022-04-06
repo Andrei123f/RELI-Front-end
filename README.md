@@ -81,10 +81,10 @@ P1 is determined by comparing the ASTs(short for Abstract Syntax Trees) generate
 ### Built With
 The major frameworks that I used: <br />
 * <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue logo" width=20 height=20>Vue.js</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vuex</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vue-router</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vite</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/bootstrap.png" alt="Bootstrap logo" width=20 height=20>Bootstrap</a> 
+* <a href="https://vuex.vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vuex</a> 
+* <a href="https://router.vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vue-router</a> 
+* <a href="https://vitejs.dev/"><img src="https://vitejs.dev/logo.svg" alt="Vue-router logo" width=20 height=20>Vite</a> 
+* <a href="https://getbootstrap.com/"><img src="https://img.icons8.com/color/344/bootstrap.png" alt="Bootstrap logo" width=20 height=20>Bootstrap</a> 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
