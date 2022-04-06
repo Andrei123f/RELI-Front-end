@@ -71,7 +71,7 @@ Here's why:
 ### How Does RenderLingo work
 
 <div id="how-does-it-work"></div>
-⚙️ Once you submit a challenge solution, RELI's API will evaluate your solution and give you 3 values, P1, P2, C alongside with the tests failed and passed.
+⚙️ Once you submit a challenge solution, <a href="https://github.com/Andrei123f/RELI-back-end">RELI's API</a> will evaluate your solution and give you 3 values, P1, P2, C alongside with the tests failed and passed.
 In short, P1 is a % of how similar is your solution to mine for that challenge, P2 is a % of how many tests your solution passed and C is a value calculated as C = 20%P1 + 80%P2. 
 <br />
 <br />
