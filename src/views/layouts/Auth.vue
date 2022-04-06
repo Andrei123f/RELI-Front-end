@@ -12,6 +12,7 @@
       },
       fpsLimit: 70,
       interactivity: {
+        detect_on: 'canvas',
         events: {
           onClick: {
             enable: true,
