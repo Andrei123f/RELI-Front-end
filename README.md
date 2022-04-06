@@ -15,7 +15,7 @@
     <img src="https://github.com/Andrei123f/RELI-Front-end/blob/main/public/reli-logo.jpg" alt="Logo" width=400 height=300>
   </a>
 
-  <h3 align="center">RenderLingo - Front End</h3>
+  <h3 align="center">RenderLingo - Portal</h3>
 
   <p align="center">
     E-learning platform that evaluates the solution using ASTs(Abstract Syntax Trees) comparisons and unit testing.
