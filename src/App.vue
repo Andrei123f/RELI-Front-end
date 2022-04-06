@@ -80,6 +80,7 @@ export default {
       this.msg = "";
     },
     updateRefreshAccessTokenMessage(state) {
+      this.resetMessages();
       switch (state) {
         case "pending":
           this.showInfo = true;
