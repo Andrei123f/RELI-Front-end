@@ -18,7 +18,7 @@
   <h3 align="center">RenderLingo - Front End</h3>
 
   <p align="center">
-    Online e-learning platform that evaluates the solution using ASTs(Abstract Syntax Trees) comparisons and unit testing.
+    E-learning platform that evaluates the solution using ASTs(Abstract Syntax Trees) comparisons and unit testing.
     <br />
     <a href="https://reli-front-end.vercel.app/">View Demo</a> <br />
     <a href="https://github.com/Andrei123f/RELI-Front-end/issues">Report Bug</a><br />
