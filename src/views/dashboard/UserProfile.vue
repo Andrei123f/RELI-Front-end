@@ -60,11 +60,12 @@
 
   <div class="header" style="text-align: center" v-if="!isLoadingData">
     <h6 class="m-0 font-weight-bold text-primary">
-      <span>{{
+      <span v-if="!chaptersCompleted">{{
         `Complete ${nextChallenge.chapter} to become ${
           nextChallenge.status == "Amateur" ? "an" : "a"
         } ${nextChallenge.status} !`
       }}</span>
+      <span v-else>Thank you for using my platform! 😊</span>
     </h6>
   </div>
   <ProgressBarVue
@@ -113,6 +114,7 @@ export default {
       ],
       rawChapterData: [],
       isLoadingData: false,
+      chaptersCompleted:false,
     };
   },
   mounted() {
@@ -140,6 +142,8 @@ export default {
       const chapter3Done = this.rawChapterData[2].perc_done == 100;
       const chapter4Done = this.rawChapterData[3].perc_done == 100;
 
+      chaptersCompleted = chapter1Done && chapter2Done && chapter3Done && chapter4Done;
+
       this.unlocked_statuses.push("Newcomer");
 
       if (chapter1Done) {
@@ -157,6 +161,11 @@ export default {
       if (chapter4Done) {
         this.currentStatus = "Enthusiast";
         this.unlocked_statuses.push("Enthusiast");
+      }
+
+      if(chaptersCompleted) {
+        this.currentStatus = "Pro";
+        this.unlocked_statuses.push("Pro");
       }
 
       for (const unlockedId in this.unlocked_statuses) {
@@ -249,7 +258,7 @@ export default {
         */
         description: "",
 
-        completed: chapter1Done && chapter2Done && chapter3Done && chapter4Done,
+        completed: chaptersCompleted,
       });
     },
   },
