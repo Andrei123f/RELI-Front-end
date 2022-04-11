@@ -142,7 +142,7 @@ export default {
       const chapter3Done = this.rawChapterData[2].perc_done == 100;
       const chapter4Done = this.rawChapterData[3].perc_done == 100;
 
-      chaptersCompleted = chapter1Done && chapter2Done && chapter3Done && chapter4Done;
+      this.chaptersCompleted = chapter1Done && chapter2Done && chapter3Done && chapter4Done;
 
       this.unlocked_statuses.push("Newcomer");
 
@@ -163,7 +163,7 @@ export default {
         this.unlocked_statuses.push("Enthusiast");
       }
 
-      if(chaptersCompleted) {
+      if(this.chaptersCompleted) {
         this.currentStatus = "Pro";
         this.unlocked_statuses.push("Pro");
       }
@@ -258,7 +258,7 @@ export default {
         */
         description: "",
 
-        completed: chaptersCompleted,
+        completed: this.chaptersCompleted,
       });
     },
   },
