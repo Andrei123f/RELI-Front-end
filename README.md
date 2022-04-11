@@ -15,7 +15,7 @@
     <img src="https://github.com/Andrei123f/RELI-Front-end/blob/main/public/reli-logo.jpg" alt="Logo" width=400 height=300>
   </a>
 
-  <h3 align="center">RenderLingo - Front End</h3>
+  <h3 align="center">RenderLingo - Portal</h3>
 
   <p align="center">
     E-learning platform that evaluates the solution using ASTs(Abstract Syntax Trees) comparisons and unit testing.
@@ -58,7 +58,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-RenderLingo (in short RELI) is a protoype online learning platform build with the Vue ecosystem that aims to help people with different backgrounds to develop an algorithmic thinking mind using the action of translating/rendering a word problem (story). RELI currently supports the JavaScript programming language. RELI is also my thesis project.
+RenderLingo (in short RELI) is a protoype online learning platform built with the <img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vue ecosystem that aims to help people with different backgrounds to develop an algorithmic thinking mind using the action of translating/rendering a word problem (story). RELI currently supports the JavaScript programming language. RELI is also my thesis project.
 
 Why should you use RELI?<br />
 Here's why:
@@ -71,7 +71,7 @@ Here's why:
 ### How Does RenderLingo work
 
 <div id="how-does-it-work"></div>
-⚙️ Once you submit a challenge solution, RELI's API will evaluate your solution and give you 3 values, P1, P2, C alongside with the tests failed and passed.
+⚙️ Once you submit a challenge solution, <a href="https://github.com/Andrei123f/RELI-back-end">RELI's API</a> will evaluate your solution and give you 3 values, P1, P2, C alongside with the tests failed and passed.
 In short, P1 is a % of how similar is your solution to mine for that challenge, P2 is a % of how many tests your solution passed and C is a value calculated as C = 20%P1 + 80%P2. 
 <br />
 <br />
@@ -81,10 +81,10 @@ P1 is determined by comparing the ASTs(short for Abstract Syntax Trees) generate
 ### Built With
 The major frameworks that I used: <br />
 * <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue logo" width=20 height=20>Vue.js</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vuex</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vue-router</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vite</a> 
-* <a href="https://vuejs.org/"><img src="https://img.icons8.com/color/344/bootstrap.png" alt="Bootstrap logo" width=20 height=20>Bootstrap</a> 
+* <a href="https://vuex.vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vuex logo" width=20 height=20>Vuex</a> 
+* <a href="https://router.vuejs.org/"><img src="https://img.icons8.com/color/344/vue-js.png" alt="Vue-router logo" width=20 height=20>Vue-router</a> 
+* <a href="https://vitejs.dev/"><img src="https://vitejs.dev/logo.svg" alt="Vue-router logo" width=20 height=20>Vite</a> 
+* <a href="https://getbootstrap.com/"><img src="https://img.icons8.com/color/344/bootstrap.png" alt="Bootstrap logo" width=20 height=20>Bootstrap</a> 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
