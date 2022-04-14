@@ -133,27 +133,52 @@
                 {{ codeSyntaxError.error_text }}
               </span>
               <span v-if="codeSyntaxError.status == 'CORRECT'">
-                <a
+                <span
                   v-if="
                     challengeDetails.challengeDetails &&
                     challengeDetails.challengeDetails.C >= 80
                   "
-                  @click="loadNextChallenge(true)"
-                  class="btn-primary"
-                  style="
-                    float: right;
-                    margin: 0;
-                    width: 150px;
-                    height: 20px;
-                    text-align: center;
-                    padding: 0;
-                    text-decoration: none;
-                    cursor: pointer;
-                    border-radius: 15px 50px 30px;
-                  "
                 >
-                  Get next challenge
-                </a>
+                  <a
+                    v-if="
+                      challengeDetails.challengeDetails &&
+                      challengeDetails.challengeDetails.C >= 80
+                    "
+                    @click="loadNextChallenge(true)"
+                    class="btn-primary"
+                    style="
+                      float: right;
+                      margin: 0;
+                      width: 150px;
+                      height: 20px;
+                      text-align: center;
+                      padding: 0;
+                      text-decoration: none;
+                      cursor: pointer;
+                      border-radius: 15px 50px 30px;
+                    "
+                  >
+                    Get next challenge
+                  </a>
+                  <span style="float: right"> &nbsp&nbspor&nbsp&nbsp </span>
+                  <a
+                    @click="submitAnswer"
+                    class="btn-primary"
+                    style="
+                      float: right;
+                      margin: 0;
+                      width: 200px;
+                      height: 20px;
+                      text-align: center;
+                      padding: 0;
+                      text-decoration: none;
+                      cursor: pointer;
+                      border-radius: 15px 50px 30px;
+                    "
+                  >
+                    Submit another answer
+                  </a>
+                </span>
                 <a
                   v-else
                   @click="submitAnswer"
