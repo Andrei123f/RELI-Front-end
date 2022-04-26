@@ -97,7 +97,7 @@
             </div>
           </div>
           <div class="text-center mt-5" style="color: white">
-            Copyright &copy; 2021-2022 &mdash;
+            Made with &#10084 by
             <a
               href="https://github.com/Andrei123f"
               style="color: white; text-decoration: none"

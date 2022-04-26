@@ -102,7 +102,7 @@
     <img
       width="500"
       height="500"
-      src="../../../public/reli-logo-icon_small_wihout_background.png"
+      src="/reli-logo-icon_small_wihout_background.png"
     />
     <h1>
       404 Not found. 😞<br />
