@@ -1,8 +1,6 @@
 <div id="top"></div>
 
 
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
@@ -178,7 +176,7 @@ Project Link: [https://github.com/Andrei123f/RELI-Front-end](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/Andrei123f/RELI-Front-end.svg?style=for-the-badge
 [issues-url]: https://github.com/Andrei123f/RELI-Front-end/issues
 [license-shield]: https://img.shields.io/github/license/Andrei123f/RELI-Front-end.svg?style=for-the-badge
-[license-url]: https://github.com/Andrei123f/RELI-Front-end/blob/main/LICENSE.txt
+[license-url]: https://github.com/Andrei123f/RELI-Front-end/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/andrei-popa-563916192
 [product-screenshot]: https://github.com/Andrei123f/RELI-Front-end/blob/main/public/cosmin_try.png
